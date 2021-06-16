@@ -1,0 +1,128 @@
+.todo-list-tasks-container {
+  margin: 40px;
+
+  &--header{
+    margin-bottom: 40px;
+
+    &--toDoList-values{
+      margin-bottom: 12px;
+
+      &--icon{
+        margin-right: 12px;
+      }
+
+      .mat-input-element:disabled {
+        color: black;
+      }
+      &--input{
+
+        width: auto !important;
+        height: auto !important;
+        font-size: 30px;
+        box-sizing: border-box;
+        box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.5),
+      }
+    }
+
+    &--toDoList-actions {
+      &--button{
+
+      }
+    }
+
+  }
+
+  &--search {
+    margin-bottom: 25px;
+    display: flex;
+
+    &--input {
+      padding-right: 20px;
+    }
+  }
+
+  &--board {
+    display: flex;
+
+    &>:last-child {
+      border-right:  1px solid lightgray;
+    }
+    @mixin board-column {
+      height: auto;
+      width: 400px;
+      min-height: 800px;
+      border-left:   1px solid  lightgray;
+
+      &--title {
+        font-weight: 500;
+        font-size: 16px;
+        margin: 12px 8px 40px 8px;
+      }
+
+      &--card {
+        margin: 1px 2px;
+        padding: 12px 8px;
+        text-align: center;
+        border-radius: 0 !important;
+
+        &--card-content {
+          display: flex;
+
+          &-text {
+            max-width: 70%;
+            padding-top: 8px;
+          }
+
+          &-actions {
+            display: flex;
+            margin-left: auto;
+
+            &>:first-child {
+
+              &>:first-child {
+                text-align: center;
+              }
+              padding-right: 4px;
+              padding-top: 12px;
+            }
+          }
+        }
+      }
+    }
+
+    &--todo {
+      @include board-column;
+    }
+    &--in-progress {
+      @include board-column;
+    }
+    &--done {
+      @include board-column;
+    }
+  }
+}
+
+:focus {
+  outline:none;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.todo-list-tasks-container--board--todo.cdk-drop-list-dragging .todo-list-tasks-container--board--todo--box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+

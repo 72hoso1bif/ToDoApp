@@ -1,0 +1,18 @@
+section {
+  display: table;
+}
+
+.main-container{
+  height: 100%;
+
+  .side-nav-container {
+    width: 15%;
+    padding-top: 30px;
+    background-color: #5b6467;
+    background-image: linear-gradient(315deg, #5b6467 0%, #8b939a 74%);
+  }
+
+  .mat-drawer-container{
+    height: 100%;
+  }
+}

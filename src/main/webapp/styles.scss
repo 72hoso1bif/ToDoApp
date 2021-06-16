@@ -1,0 +1,23 @@
+a { cursor: pointer; }
+
+.app-container {
+  min-height: 320px;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+
+
+  .alert-section{
+    width: 300px;
+    height: 50px;
+    margin: auto;
+  }
+
+}
+
+html{
+  height: 100%  !important;
+}
+body {
+  height: 100%;
+}

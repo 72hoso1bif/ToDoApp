@@ -1,0 +1,44 @@
+.registerPanel .dialog-content{
+  height: fit-content;
+  width: fit-content;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.dialog-content {
+
+  .alert-section{
+    margin-bottom: 10px;
+  }
+
+  .header{
+    justify-content: center;
+  }
+
+  width: 100%;
+  margin: 2px;
+
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+  mat-dialog-actions{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    .submit {
+      margin-bottom: 20px;
+    }
+
+  }
+
+}
+
+
+
+

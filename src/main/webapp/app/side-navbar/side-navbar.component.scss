@@ -1,0 +1,60 @@
+.nav-link-entry {
+
+    &:hover {
+      background-color: darkgray;
+    }
+
+    :last-child {
+      margin-left: auto;
+    }
+
+    .nav-link-entry-content {
+
+      @mixin icon($isAvatar: false) {
+
+        padding-right: 8px;
+        color: #0174fc;
+
+        @if $isAvatar {
+          margin-right: 12px;
+          height: 30px;
+          width: 30px;
+          border-radius: 20px;
+          background-size: cover !important;
+        }
+      }
+
+      display: flex;
+      padding: 6px 16px;
+
+      &--icon {
+        @include icon($isAvatar: false)
+      }
+
+      &--avatar {
+        @include icon($isAvatar: true)
+      }
+
+      &--chip-list {
+
+        margin-left: 12px;
+
+        :first-child{
+          padding: 8px;
+        }
+
+      }
+
+      &--link {
+        color: #ffffff;
+        font-weight: 400;
+        text-decoration: none;
+      }
+
+      :last-child{
+        color: #ffffff;
+        font-weight: 400;
+        text-decoration: none;
+      }
+    }
+  }

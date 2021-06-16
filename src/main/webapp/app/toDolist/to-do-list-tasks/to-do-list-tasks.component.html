@@ -1,0 +1,125 @@
+<div class="todo-list-tasks-container">
+
+  <section class="todo-list-tasks-container--header">
+    <div class="todo-list-tasks-container--header--toDoList-values" >
+      <mat-icon class="todo-list-tasks-container--header--toDoList-values--icon">{{toDoListIconName}}</mat-icon>
+      <input class="todo-list-tasks-container--header--toDoList-values--input" *ngIf="toDoListId !== null" matInput matTooltip="{{matToolTipValueForToDoListName}}" (change)="onToDoListNameChange($event)" value="{{toDoListName}}">
+      <input class="todo-list-tasks-container--header--toDoList-values--input" *ngIf="toDoListId === null" matInput [value]="toDoListName" disabled>
+    </div>
+    <div class="todo-list-tasks-container--header--toDoList-actions" *ngIf="toDoListId">
+      <button class="todo-list-tasks-container--header--toDoList-actions--button" mat-button matTooltip="Delete To Do List" (click)="deleteToDoList()"><mat-icon>delete</mat-icon></button>
+      <button class="todo-list-tasks-container--header--toDoList-actions--button" mat-button matTooltip="Save To Do List" (click)="updateToDoList()"><mat-icon>save</mat-icon></button>
+    </div>
+  </section>
+
+  <section class="todo-list-tasks-container--search">
+    <mat-form-field  class="todo-list-tasks-container--search--input">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput type="search" placeholder="Filter Todos" [(ngModel)]="searchValue" (input)="onSearchChange($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select...</mat-label>
+      <mat-select class="todo-list-tasks-container--search--select">
+      </mat-select>
+    </mat-form-field>
+  </section>
+  <section class="todo-list-tasks-container--board" cdkDropListGroup>
+    <div class="todo-list-tasks-container--board--todo" id="list_todo"
+         cdkDropList
+         [cdkDropListData]="todoListTask"
+         (cdkDropListDropped)="drop($event)">
+      <span class="todo-list-tasks-container--board--todo--title">TO DO</span>
+      <div class="todo-list-tasks-container--board--todo--box" *ngFor="let todo of todoListTask" cdkDrag>
+        <mat-card class="todo-list-tasks-container--board--todo--card">
+          <mat-card-content class="todo-list-tasks-container--board--todo--card--card-content">
+            <div class="todo-list-tasks-container--board--todo--card--card-content-text" (click)="editToDoTask(todo)">{{todo.taskName}}</div>
+            <br/>
+            <div class="todo-list-tasks-container--board--todo--card--card-content-actions">
+              <div>
+                <span>{{todo.endAt | date}}</span>
+              </div>
+              <button mat-icon-button (click)="toggleImportant(todo)">
+                <mat-icon class="material-icons" >{{todo.important ? 'star' : 'star_outline'}}</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <mat-card *ngIf="toDoListId" class="todo-list-tasks-container--board--todo--card">
+        <button mat-mini-fab color="primary" (click)="createNewTask()"><mat-icon>add</mat-icon></button>
+      </mat-card>
+    </div>
+
+    <div class="todo-list-tasks-container--board--in-progress" id="list_todo_in_progress"
+         cdkDropList
+         [cdkDropListData]="todoListTaskInProgress"
+         (cdkDropListDropped)="drop($event)">
+      <span class="todo-list-tasks-container--board--todo--title">IN PROGRESS</span>
+      <div *ngFor="let todo_progress of todoListTaskInProgress" cdkDrag>
+        <mat-card class="todo-list-tasks-container--board--todo--card">
+          <mat-card-content class="todo-list-tasks-container--board--todo--card--card-content">
+            <div class="todo-list-tasks-container--board--todo--card--card-content-text" (click)="editToDoTask(todo_progress)" >{{todo_progress.taskName}}</div><br />
+            <div class="todo-list-tasks-container--board--todo--card--card-content-actions">
+              <div>
+                <span>{{todo_progress.endAt | date}}</span>
+              </div>
+              <button mat-icon-button (click)="toggleImportant(todo_progress)">
+                <mat-icon class="material-icons" >{{todo_progress.important ? 'star' : 'star_outline'}}</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="todo-list-tasks-container--board--done" id="list_todo_done"
+         cdkDropList
+         [cdkDropListData]="todoListTaskDone"
+         (cdkDropListDropped)="drop($event)">
+      <span class="todo-list-tasks-container--board--todo--title">DONE</span>
+      <div *ngFor="let todo_done of todoListTaskDone" cdkDrag>
+        <mat-card class="todo-list-tasks-container--board--todo--card">
+          <mat-card-content class="todo-list-tasks-container--board--todo--card--card-content" >
+            <div class="todo-list-tasks-container--board--todo--card--card-content-text" (click)="editToDoTask(todo_done)">{{todo_done.taskName}}</div><br />
+            <div class="todo-list-tasks-container--board--todo--card--card-content-actions">
+              <div>
+                <span>{{todo_done.endAt | date}}</span>
+              </div>
+              <button mat-icon-button (click)="toggleImportant(todo_done)">
+                <mat-icon class="material-icons" >{{todo_done.important ? 'star' : 'star_outline'}}</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div class="todo-list-tasks-container--board--done" id="list_todo_delete"
+         cdkDropList
+         [cdkDropListData]="todoListTaskToDelete"
+         (cdkDropListDropped)="drop($event)">
+      <span class="todo-list-tasks-container--board--todo--title">Delete</span>
+      <div *ngFor="let todo_delete of todoListTaskToDelete" cdkDrag>
+        <mat-card class="todo-list-tasks-container--board--todo--card">
+          <mat-card-content class="todo-list-tasks-container--board--todo--card--card-content" >
+            <div class="todo-list-tasks-container--board--todo--card--card-content-text" (click)="editToDoTask(todo_delete)">{{todo_delete.taskName}}</div><br />
+            <div class="todo-list-tasks-container--board--todo--card--card-content-actions">
+              <div>
+                <span>{{todo_delete.endAt | date}}</span>
+              </div>
+              <button mat-icon-button (click)="toggleImportant(todo_delete)">
+                <mat-icon class="material-icons" >{{todo_delete.important ? 'star' : 'star_outline'}}</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteToDoTask(todo_delete.id)">
+                <mat-icon class="material-icons" >delete</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <mat-card *ngIf="todoListTaskToDelete.length > 0" class="todo-list-tasks-container--board--todo--card">
+        <button mat-mini-fab color="primary" (click)="deleteToDoTaskAll()"><mat-icon matTooltip="Delete All">delete</mat-icon></button>
+      </mat-card>
+    </div>
+  </section>
+
+</div>

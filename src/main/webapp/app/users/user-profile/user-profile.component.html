@@ -1,0 +1,109 @@
+<div class="user-main-container">
+  <div class="user-profile-container">
+    <mat-card class="user-profile-container-card">
+      <div class="user-profile-container-card-header" fxLayout="row">
+        <div class="user-profile-container-card-header-avatar">
+          <div mat-card-avatar class="user-profile-container-card-header-avatar--image"(click)="imageZoom($event)" id="avatar" *ngIf="isAuthenticated()"  [style.background]="'url(' + currentImgUrl + ')'"></div>
+          <button *ngIf="imageEditButtonVisible" mat-mini-fab class="user-profile-container-card-header-avatar--edit-button"
+                  #buttonPicker="appFilePicker" appFilePicker (filesChanged)="_onFilesChanged($event)" (filesReset)="_onReset()" color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="user-profile-container-card-header-text">
+          <mat-card-title class="user-profile-container-card-header-text--title">
+            {{user.username}}
+          </mat-card-title>
+          <mat-card-subtitle class="user-profile-container-card-header-text--subtitle">
+            {{user.email}}
+          </mat-card-subtitle>
+        </div>
+        <div class="user-profile-container-card-header-button">
+          <button mat-stroked-button color="primary" (click)="_reset()">Reset</button>
+        </div>
+      </div>
+      <mat-card-content class="user-profile-card-container-content">
+        <form [formGroup]="userProfileForm" >
+        <mat-form-field class="user-profile-card-container-content--field" fxLayout="column">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" placeholder="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+            <div *ngIf="f.username.errors.minlength">Username must be at least 3 characters</div>
+          </div>
+        </mat-form-field>
+        <mat-form-field class="user-profile-card-container-content--field" fxLayout="column">
+          <mat-label>Email</mat-label>
+            <input matInput type="email" placeholder="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">email is required</div>
+              <div *ngIf="f.email.errors.pattern">False format</div>
+              <div *ngIf="f.email.errors.maxLength">Email should be not more than 50 characters</div>
+            </div>
+        </mat-form-field>
+        <mat-form-field class="user-profile-card-container-content--field" fxLayout="column">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="Leave Blank to keep password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+          </div>
+        </mat-form-field>
+        </form>
+      </mat-card-content>
+      <div class="user-profile-card-container-buttons">
+        <button  [disabled]="loading" (click)="onSubmit()" mat-raised-button color="primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Speichern
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!--<h1 *ngIf="!isAddMode">Edit User</h1>-->
+<!--<div fxLayout="column" class="user-edit-main">-->
+<!--  <form [formGroup]="form">-->
+<!--    <mat-form-field fxLayout="column">-->
+<!--        <label>email</label>-->
+<!--        <input matInput placeholder="email" type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />-->
+<!--        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">-->
+<!--          <div *ngIf="f.email.errors.required">Email is required</div>-->
+<!--          <div *ngIf="f.email.errors.pattern">False format</div>-->
+<!--          <div *ngIf="f.email.errors.maxLength">Email should be not more than 50 characters</div>-->
+<!--        </div>-->
+<!--    </mat-form-field>-->
+<!--    <mat-form-field fxLayout="column">-->
+<!--        <label>Username</label>-->
+<!--        <input matInput placeholder="username" type="text" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />-->
+<!--        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">-->
+<!--          <div *ngIf="f.username.errors.required">Username is required</div>-->
+<!--          <div *ngIf="f.username.errors.minlength">Username must be at least 3 characters</div>-->
+<!--        </div>-->
+<!--    </mat-form-field >-->
+<!--    <mat-form-field fxLayout="column">-->
+<!--        <label>-->
+<!--          Password-->
+<!--          <em *ngIf="!isAddMode">(Leave blank to keep the same password)</em>-->
+<!--        </label>-->
+<!--        <input matInput placeholder="password" type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />-->
+<!--        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">-->
+<!--          <div *ngIf="f.password.errors.required">Password is required</div>-->
+<!--          <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>-->
+<!--        </div>-->
+<!--    </mat-form-field>-->
+<!--    <mat-form-field fxLayout="column">-->
+<!--      <button [disabled]="loading" class="btn btn-primary">-->
+<!--        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>-->
+<!--        Save-->
+<!--      </button>-->
+<!--      <a *ngIf="isPermitted" routerLink="/users" class="btn btn-link">Cancel</a>-->
+<!--      <a *ngIf="!isPermitted" routerLink="/home" class="btn btn-link">Cancel</a>-->
+<!--    </mat-form-field>-->
+<!--  </form>-->
+<!--</div>-->

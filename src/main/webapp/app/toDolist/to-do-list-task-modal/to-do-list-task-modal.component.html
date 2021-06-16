@@ -1,0 +1,40 @@
+<div class="dialog-content" mat-dialog-content>
+  <div fxLayout="row" fxLayoutAlign="center center" class="todo-task-main">
+    <div>
+      <div class="header">
+        <h2>Kategorie</h2>
+      </div>
+      <div fxLayout="column">
+        <form [formGroup]="toDoTaskForm">
+          <mat-form-field fxLayout="column">
+            <mat-label>Aufgabe</mat-label>
+            <textarea class="todo-task-creation--task-description" matInput type="text" formControlName="taskName" [ngClass]="{ 'is-invalid': submitted && f.taskName.errors }"></textarea>
+            <div *ngIf="submitted && f.taskName.errors" class="invalid-feedback">
+              <div *ngIf="f.taskName.errors.required">description is required</div>
+              <div *ngIf="f.taskName.errors.maxLength">description is too large</div>
+            </div>
+          </mat-form-field>
+          <mat-form-field fxLayout="column">
+            <mat-label>Datum</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="endAt" [ngClass]="{ 'is-invalid': submitted && f.endAt.errors }">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <div *ngIf="submitted && f.endAt.errors" class="invalid-feedback">
+              <div *ngIf="f.endAt.errors.required">Date is Required</div>
+            </div>
+          </mat-form-field>
+          <mat-checkbox formControlName="important">Importance</mat-checkbox>
+        </form>
+      </div>
+      <mat-dialog-actions>
+        <div class="submit">
+          <button [disabled]="loading" (click)="onSubmit()" mat-raised-button color="primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            {{buttonText}}
+          </button>
+        </div>
+      </mat-dialog-actions>
+    </div>
+  </div>
+</div>
+

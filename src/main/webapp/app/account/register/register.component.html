@@ -1,0 +1,50 @@
+<div class="dialog-content" mat-dialog-content>
+  <div fxLayout="row" fxLayoutAlign="center center" class="login-main">
+    <div>
+      <div class="header">
+        <h2>Register Page</h2>
+      </div>
+      <div class fxLayout="column">
+        <div class="alert-section"></div>
+        <form [formGroup]="form">
+          <mat-form-field fxLayout="column">
+            <input matInput placeholder="email" type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">email is required</div>
+              <div *ngIf="f.email.errors.pattern">False format</div>
+              <div *ngIf="f.email.errors.maxLength">Email should be not more than 50 characters</div>
+            </div>
+          </mat-form-field>
+          <mat-form-field fxLayout="column">
+            <input matInput placeholder="username" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Username is required</div>
+              <div *ngIf="f.username.errors.minlength">Username must be at least 3 characters</div>
+            </div>
+          </mat-form-field>
+          <mat-form-field fxLayout="column">
+            <input matInput type="password" placeholder="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+            </div>
+          </mat-form-field>
+        </form>
+        <mat-dialog-actions>
+          <div class="submit">
+            <button  [disabled]="loading" (click)="onSubmit()" mat-raised-button color="primary">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Registrieren
+            </button>
+          </div>
+          <div>
+            <a (click)="openLoginDialog()">Zurück zum Login</a>
+          </div>
+        </mat-dialog-actions>
+      </div>
+    </div>
+    </div>
+  </div>
+
+
+

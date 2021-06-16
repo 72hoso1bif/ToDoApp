@@ -1,0 +1,53 @@
+<div class="dialog-content" mat-dialog-content>
+  <div fxLayout="row" fxLayoutAlign="center center" class="login-main">
+    <div>
+      <div class="header">
+        <h2>Kategorie</h2>
+      </div>
+      <div fxLayout="column">
+        <form [formGroup]="toDoListForm">
+          <mat-form-field fxLayout="column">
+            <input matInput placeholder="Name" type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Name wird benötigt</div>
+            </div>
+          </mat-form-field>
+          <mat-form-field fxLayout="column">
+            <mat-label>Symbol</mat-label>
+            <mat-select formControlName="iconName">
+              <mat-option [value]="'shopping_cart'"><mat-icon>shopping_cart</mat-icon></mat-option>
+              <mat-option [value]="'celebration'"><mat-icon>celebration</mat-icon></mat-option>
+              <mat-option [value]="'payments'"><mat-icon>payments</mat-icon></mat-option>
+              <mat-option [value]="'train'"><mat-icon>train</mat-icon></mat-option>
+              <mat-option [value]="'self_improvement'"><mat-icon>self_improvement</mat-icon></mat-option>
+              <mat-option [value]="'school'"><mat-icon>school</mat-icon></mat-option>
+              <mat-option [value]="'flight_takeoff'"><mat-icon>flight_takeoff</mat-icon></mat-option>
+              <mat-option [value]="'sports_soccer'"><mat-icon>sports_soccer</mat-icon></mat-option>
+              <mat-option [value]="'pool'"><mat-icon>pool</mat-icon></mat-option>
+              <mat-option [value]="'sailing'"><mat-icon>sailing</mat-icon></mat-option>
+              <mat-option [value]="'sports_esports'"><mat-icon>sports_esports</mat-icon></mat-option>
+              <mat-option [value]="'house'"><mat-icon>house</mat-icon></mat-option>
+              <mat-option [value]="'yard'"><mat-icon>yard</mat-icon></mat-option>
+              <mat-option [value]="'outdoor_grill'"><mat-icon>outdoor_grill</mat-icon></mat-option>
+              <mat-option [value]="'living'"><mat-icon>living</mat-icon></mat-option>
+              <mat-option [value]="'cleaning_services'"><mat-icon>cleaning_services</mat-icon></mat-option>
+              <mat-option [value]="'local_laundry_service'"><mat-icon>local_laundry_service</mat-icon></mat-option>
+            </mat-select>
+            <div *ngIf="submitted && f.iconName.errors" class="invalid-feedback">
+              <div *ngIf="f.iconName.errors.required">Icon wird benötigt</div>
+            </div>
+          </mat-form-field>
+        </form>
+      </div>
+      <mat-dialog-actions>
+        <div class="submit">
+          <button [disabled]="loading" (click)="onSubmit()" mat-raised-button color="primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Erstellen
+          </button>
+        </div>
+      </mat-dialog-actions>
+    </div>
+  </div>
+</div>
+

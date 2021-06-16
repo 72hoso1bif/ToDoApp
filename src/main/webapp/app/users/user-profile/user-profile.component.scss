@@ -1,0 +1,85 @@
+.user-profile-container {
+  display: flex;
+  width: auto;
+
+  .user-profile-container-card {
+    width: 50%;
+    margin: 20px auto;
+    height: auto;
+
+
+    .user-profile-container-card-header {
+
+      .user-profile-container-card-header-button {
+        margin-left: 20px;
+      }
+
+      .user-profile-container-card-header-avatar{
+        width: auto;
+        height: auto;
+        position: relative;
+
+        &--image {
+          height: 90px;
+          width: 90px;
+          background-size: cover !important;
+          margin-right: 8px;
+          opacity: 1;
+          -webkit-transition: .3s ease-in-out;
+          transition: .3s ease-in-out;
+        }
+
+        &--image:hover {
+          opacity: .5;
+
+        }
+
+        &--edit-button{
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          outline: none;
+        }
+      }
+
+      .user-profile-container-card-header-text {
+        &--title{
+          margin-left: 12px;
+        }
+        &--subtitle{
+          margin-left: 12px;
+        }
+      }
+
+    }
+
+    .user-profile-card-container-content {
+      width: 100%;
+      margin-top: 50px !important;
+      flex-direction: column;
+      height: auto;
+
+      .user-profile-card-container-content--field{
+        margin-top: 12px;
+      }
+
+    }
+
+    .user-profile-card-container-buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: auto auto 30px;
+      width: 20%;
+
+      :last-child {
+        margin-top: 12px;
+      }
+    }
+  }
+}
+
+
+
+
+

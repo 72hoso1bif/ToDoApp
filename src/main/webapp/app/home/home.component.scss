@@ -1,0 +1,29 @@
+.home-container {
+  background: url("src/main/webapp/assets/HomePage.jpg");
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  display: flex;
+
+  .home-container-card-wrapper {
+
+    .home-container-card {
+      width: 60%;
+      height: auto;
+      margin: 20px auto;
+      border-radius: 0 !important;
+
+      .home-container-card-header-text {
+
+        &--title {
+
+        }
+
+        &--subtitle {
+
+        }
+      }
+    }
+  }
+}
+

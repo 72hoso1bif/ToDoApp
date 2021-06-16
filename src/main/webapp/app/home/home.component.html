@@ -1,0 +1,32 @@
+<div class="home-container">
+  <div class="home-container-card-wrapper">
+    <mat-card class="home-container-card">
+      <div class="home-container-card-header-text">
+        <mat-card-title class="home-container-card-header-text--title">
+          To Do
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="user" class="home-container-card-header-text--subtitle">
+          Welcome Home {{user.username}}
+        </mat-card-subtitle>
+        <mat-card-subtitle *ngIf="!user" class="home-container-card-header-text--subtitle">
+          Welcome Home
+        </mat-card-subtitle>
+        <span>
+          Lorem ipsum dolor sit amet,
+          consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+          dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+          no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+          invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+          takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+          dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+          Lorem ipsum dolor sit amet.
+
+          Duis autem vel eum iriure dolor in
+          hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu
+          feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum
+          zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,
+        </span>
+      </div>
+    </mat-card>
+  </div>
+</div>

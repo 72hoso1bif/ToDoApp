@@ -1,0 +1,109 @@
+<div [ngSwitch]="isAuthenticated()">
+  <div class="nav-link-entry" routerLink="/">
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>home</mat-icon></span>
+      <a class="nav-link-entry-content--link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <span></span>
+    </div>
+  </div>
+
+  <hr *ngSwitchCase="true">
+
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{daily: 'daily'}">
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>wb_sunny</mat-icon></span>
+      <a class="nav-link-entry-content--link" routerLinkActive="active">My Day</a>
+      <span>{{toDoSharedDataService.dailyCount}}</span>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{important: 'important'}">
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>grade</mat-icon></span>
+      <a class="nav-link-entry-content--link" routerLinkActive="active">Important</a>
+      <span>{{toDoSharedDataService.importantCount}}</span>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{missed: 'missed'}" >
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>call_missed</mat-icon></span>
+      <a class="nav-link-entry-content--link" routerLinkActive="active">Missed</a>
+      <span>{{toDoSharedDataService.missedCount}}</span>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{weekly: 'weekly'}" >
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>event</mat-icon></span>
+      <a class="nav-link-entry-content--link" routerLinkActive="active">Weekly</a>
+      <span>{{toDoSharedDataService.weeklyCount}}</span>
+    </div>
+  </div>
+
+  <hr *ngSwitchCase="true">
+
+  <div *ngSwitchCase="true">
+    <div class="nav-link-entry" *ngFor="let todos of toDoLists | orderBy " routerLink="/toDoList"
+         [queryParams]="todos">
+      <div class="nav-link-entry-content">
+        <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>{{todos.iconName}}</mat-icon></span>
+        <a class="nav-link-entry-content--link" routerLinkActive="active">{{todos.name}}</a>
+        <mat-chip-list class="nav-link-entry-content--chip-list">
+          <mat-chip *ngIf="todos.isNew" color="primary" selected [removable]="true" (removed)="removeChip(todos)"matChipRemove>
+            new
+          </mat-chip>
+        </mat-chip-list>
+        <span>{{todos.taskCount}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="true" class="nav-link-entry" matTooltip="Add new ToDo List" (click)="openToDoListDialog()">
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>add</mat-icon></span>
+      <a class="nav-link-entry-content--link">New List</a>
+      <span></span>
+    </div>
+  </div>
+
+  <hr>
+
+  <div *appHasAuthority="'ROLE_ADMIN' || 'ROLE_MOD'" class="nav-link-entry" routerLink="/users/list">
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>person</mat-icon></span>
+      <a class="nav-link-entry-content--link" routerLinkActive="active">Users</a>
+      <span></span>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/users/profile">
+    <div class="nav-link-entry-content">
+      <div mat-card-avatar *ngIf="isAuthenticated()" class="nav-link-entry-content--avatar" [style.background]="'url(' + userImgUrl + ')'"></div>
+      <a class="nav-link-entry-content--link" routerLinkActive="active">Profile</a>
+      <span></span>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="false" class="nav-link-entry">
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>login</mat-icon></span>
+      <a class="nav-link-entry-content--link" (click)="openLoginDialog()">Login</a>
+      <span></span>
+    </div>
+  </div>
+  <div *ngSwitchCase="false" class="nav-link-entry">
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>face</mat-icon></span>
+      <a class="nav-link-entry-content--link" (click)="openRegisterDialog()">SignUp</a>
+      <span></span>
+    </div>
+  </div>
+  <div *ngSwitchCase="true" class="nav-link-entry">
+    <div class="nav-link-entry-content">
+      <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>logout</mat-icon></span>
+      <a class="nav-link-entry-content--link" (click)="logout()">Logout</a>
+      <span></span>
+    </div>
+  </div>
+</div>
