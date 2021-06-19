@@ -16,13 +16,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11.x
-      - name: Cache Maven package
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-
-            ${{hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
       - name: Maven Verify
         run: mvn -B clean verify -Pintegration-test
   build: 
@@ -43,10 +36,3 @@ jobs:
       run: npm run build:ci 
     - name: Test 
       run: npm run test:ci
-    env: 
-        cache-name: cache-node-modules
-        with: ~/.npm on Linux/macOS
-        path: ~/.npm 
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ 
-          hashFiles('**/package-lock.json') }} 
-        restore-keys: ${{ runner.os }}-build-${{ env.cache-name }} - ${{ runner.os }}-build- ${{ runner.os }}-
