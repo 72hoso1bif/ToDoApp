@@ -28,7 +28,6 @@ public class ToDoController {
     private UserRepository userRepository;
 
 
-
     @GetMapping("/all/{userId}")
     public List<ToDoList> findAllByUserId(@PathVariable Long userId){
         return toDoRepository.findAllByUserIdOrderByCreatedAtAsc(userId);
