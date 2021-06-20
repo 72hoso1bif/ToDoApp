@@ -13,12 +13,11 @@ jobs:
     
     services:
       # Label used to access the service container
-      postgres:
+      db:
         # Docker Hub image
         image: postgres:13.1-alpine
-        # Provide the password for postgres
+        # Provide the password for postgres 
         env:
-          POSTGRES_DB: compose_postgres
           POSTGRES_USER: compose_postgres
           POSTGRES_PASSWORD: compose_postgres
         # Set health checks to wait until postgres has started
@@ -40,10 +39,10 @@ jobs:
       - name: Maven Verify
         run: mvn -B clean verify
         env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: localhost
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
+          SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/compose-postgres
+          SPRING_DATASOURCE_USERNAME: compose-postgres
+          SPRING_DATASOURCE_PASSWORD: compose-postgres
+          SPRING_JPA_HIBERNATE_DDL_AUTO: update
   build: 
     name: Frontend Build and Test 
     runs-on: ubuntu-latest 
