@@ -19,7 +19,6 @@ jobs:
         # Provide the password for postgres 
         ports: ['5432:5432']
         env:
-          POSTGRES_DB: compose_postgres
           POSTGRES_USER: compose_postgres
           POSTGRES_PASSWORD: compose_postgres
         # Set health checks to wait until postgres has started
@@ -38,7 +37,7 @@ jobs:
       - name: Maven Verify
         run: mvn -B clean verify
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/compose-postgres
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
           SPRING_DATASOURCE_USERNAME: compose_postgres
           SPRING_DATASOURCE_PASSWORD: compose_postgres
   frontend: 
