@@ -59,6 +59,8 @@ export class AuthService {
       reader.onload = (_event) => {
         this.setValue(reader.result);
       };
+    } else {
+      this.userImgURLSubject.next( '../../../assets/default_profile_picture.png');
     }
   }
 

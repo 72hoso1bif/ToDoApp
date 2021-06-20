@@ -42,15 +42,9 @@ export class SideNavbarComponent implements OnInit, OnChanges {
     private openModalService: OpenModalService
   ) {
     this.toDoListsSubject = this.toDoSharedDataService.toDoListSubject;
-    this.toDoSharedDataService.toDoListSubject
-      .subscribe(value => {
-        this.toDoLists = value;
-    });
-    if (this.userHasImage()) {
-      this.authService.userImgURL.subscribe(value => this.userImgUrl = value);
-    } else {
-      this.userImgUrl = '../../../assets/default_profile_picture.png';
-    }
+    this.toDoSharedDataService.toDoListSubject.subscribe(value => this.toDoLists = value);
+    this.authService.userImgURL.subscribe(value => this.userImgUrl = value);
+
   }
 
   ngOnInit() {
