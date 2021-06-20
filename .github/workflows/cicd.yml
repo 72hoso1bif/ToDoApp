@@ -8,25 +8,35 @@ on:
 
 jobs:
   test: 
-    name: Test - Units & Integrations
+    name: Backend - Units & Integrations
     runs-on: ubuntu-18.04
+    
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres:13.1-alpine
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: compose_postgres
+          POSTGRES_PASSWORD: compose_postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: 11.x
-      - name: Cache Maven package
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-
-            ${{hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
       - name: Maven Verify
         run: mvn -B clean verify -Pintegration-test
   build: 
-    name: Build and Test 
+    name: Frontend Build and Test 
     runs-on: ubuntu-latest 
     steps: 
     - name: Checkout 
@@ -36,17 +46,8 @@ jobs:
       with: 
         node-version: '12.x' 
     - name: Install dependencies 
-      run: npm ci 
-    - name: Cache node modules
-      uses: actions/cache@v2
+      run: npm ci
     - name: Build
-      run: npm run build:ci 
+      run: npm run ci:frontend:build 
     - name: Test 
-      run: npm run test:ci
-    env: 
-        cache-name: cache-node-modules
-        with: ~/.npm on Linux/macOS
-        path: ~/.npm 
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ 
-          hashFiles('**/package-lock.json') }} 
-        restore-keys: ${{ runner.os }}-build-${{ env.cache-name }} - ${{ runner.os }}-build- ${{ runner.os }}-
+      run: npm run ci:frontend:test
