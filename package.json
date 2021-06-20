@@ -5,13 +5,13 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
-    "test": "ng test",
+    "test": "ng test --browsers ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "webapp:build": "npm run clean-www && npm run webapp:build:dev",
     "webapp:build:dev": "ng build",
     "ci:frontend:build": "npm run webapp:build:dev",
-    "ci:frontend:test": "npm run ci:frontend:build && npm test"
+    "ci:frontend:test": "npm run ci:frontend:build && npm run test"
   },
   "private": true,
   "dependencies": {
