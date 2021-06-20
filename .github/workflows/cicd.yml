@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  test: 
+  backend: 
     name: Backend - Units & Integrations
     runs-on: ubuntu-18.04
     
@@ -39,11 +39,10 @@ jobs:
       - name: Maven Verify
         run: mvn -B clean verify
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/compose-postgres
-          SPRING_DATASOURCE_USERNAME: compose-postgres
-          SPRING_DATASOURCE_PASSWORD: compose-postgres
-          SPRING_JPA_HIBERNATE_DDL_AUTO: update
-  build: 
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/compose-postgres
+          SPRING_DATASOURCE_USERNAME: compose_postgres
+          SPRING_DATASOURCE_PASSWORD: compose_postgres
+  frontend: 
     name: Frontend Build and Test 
     runs-on: ubuntu-latest 
     steps: 
