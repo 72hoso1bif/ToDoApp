@@ -50,12 +50,11 @@ jobs:
           
       - name: Build, Push and Deploy to Heroku 
         id: heroku 
-        uses: jctaveras/heroku-deploy@v1.0.0 
+        uses: akhileshns/heroku-deploy@v3.12.12 
         with: 
           email: ${{ secrets.HEROKU_EMAIL }} 
           api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
           app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
-          dockerfile: '/home/runner/work/ToDoApp/ToDoApp/src/main/docker/backend/Dockerfile' 
   frontend: 
     name: Frontend Build and Test 
     runs-on: ubuntu-latest 
@@ -81,9 +80,8 @@ jobs:
       run: npm run ci:frontend:test
     - name: Build, Push and Deploy to Heroku 
       id: heroku 
-      uses: jctaveras/heroku-deploy@v1.0.0 
+      uses: akhileshns/heroku-deploy@v3.12.12
       with: 
           email: ${{ secrets.HEROKU_EMAIL }} 
           api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
           app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
-          dockerfile: '/home/runner/work/ToDoApp/ToDoApp/src/main/docker/frontend/Dockerfile'
