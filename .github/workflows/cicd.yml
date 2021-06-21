@@ -47,14 +47,15 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
           SPRING_DATASOURCE_USERNAME: compose_postgres
           SPRING_DATASOURCE_PASSWORD: compose_postgres
-          
-      - name: Build, Push and Deploy to Heroku 
+      - name: Build, Push Backend to Heroku
         id: heroku 
         uses: akhileshns/heroku-deploy@v3.12.12 
         with: 
           heroku_email: ${{ secrets.HEROKU_EMAIL }} 
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
+          heroku_app_name: todo-list-app-ba # you aplicationname
+        env:
+          HD_APP_BASE: "src/api"
   frontend: 
     name: Frontend Build and Test 
     runs-on: ubuntu-latest 
@@ -78,10 +79,13 @@ jobs:
       run: npm run ci:frontend:build 
     - name: Test 
       run: npm run ci:frontend:test
-    - name: Build, Push and Deploy to Heroku 
+    - name: Build, Push Backend to Heroku
       id: heroku 
-      uses: akhileshns/heroku-deploy@v3.12.12
+      uses: akhileshns/heroku-deploy@v3.12.12 
       with: 
-          heroku_email: ${{ secrets.HEROKU_EMAIL }} 
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
+        heroku_email: ${{ secrets.HEROKU_EMAIL }} 
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
+        heroku_app_name: todo-list-app-web-client # you aplicationname
+      env:
+        HD_APP_BASE: "src/web/client"
+        HD_ANGULAR_APP_API_URL: "https://todo-list-app-ba.herokuapp.com"
