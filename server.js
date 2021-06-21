@@ -1,8 +1,18 @@
+function requireHTTPS(req, res, next) {
+  // The 'x-forwarded-proto' check is for Heroku
+  if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
+}
 const express = require('express');
 const app = express();
+app.use(requireHTTPS);
 
-// Run the app by serving the static files in the dist directory
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static('./dist/todolist'));
 
-// Start the app by listening on the default Heroku port
+app.get('/*', function(req, res) {
+  res.sendFile('index.html', {root: 'dist/todolist/'});
+});
+
 app.listen(process.env.PORT || 8080);
