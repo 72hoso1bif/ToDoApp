@@ -52,9 +52,9 @@ jobs:
         id: heroku 
         uses: akhileshns/heroku-deploy@v3.12.12 
         with: 
-          email: ${{ secrets.HEROKU_EMAIL }} 
-          api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
-          app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
+          heroku_email: ${{ secrets.HEROKU_EMAIL }} 
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
   frontend: 
     name: Frontend Build and Test 
     runs-on: ubuntu-latest 
@@ -82,6 +82,6 @@ jobs:
       id: heroku 
       uses: akhileshns/heroku-deploy@v3.12.12
       with: 
-          email: ${{ secrets.HEROKU_EMAIL }} 
-          api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
-          app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
+          heroku_email: ${{ secrets.HEROKU_EMAIL }} 
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
