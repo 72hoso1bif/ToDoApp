@@ -34,12 +34,27 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11.x
+      - name: Cache Maven Dependecies
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: | 
+            ${{ runner.os }}-maven-
       - name: Maven Verify
         run: mvn -B clean verify
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
           SPRING_DATASOURCE_USERNAME: compose_postgres
           SPRING_DATASOURCE_PASSWORD: compose_postgres
+          
+      - name: Build, Push and Deploy to Heroku 
+        id: heroku 
+        uses: akhileshns/heroku-deploy@v3.12.12 
+        with: 
+          heroku_email: ${{ secrets.HEROKU_EMAIL }} 
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
   frontend: 
     name: Frontend Build and Test 
     runs-on: ubuntu-latest 
@@ -49,10 +64,24 @@ jobs:
     - name: Use Node 12.x 
       uses: actions/setup-node@v1 
       with: 
-        node-version: '12.x' 
+        node-version: '12.x'
+    - name: Cache NPM dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-npm-cache-
     - name: Install dependencies 
       run: npm ci
     - name: Build
       run: npm run ci:frontend:build 
     - name: Test 
       run: npm run ci:frontend:test
+    - name: Build, Push and Deploy to Heroku 
+      id: heroku 
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with: 
+          heroku_email: ${{ secrets.HEROKU_EMAIL }} 
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
