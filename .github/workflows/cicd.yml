@@ -47,6 +47,21 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
           SPRING_DATASOURCE_USERNAME: compose_postgres
           SPRING_DATASOURCE_PASSWORD: compose_postgres
+      - name: Wait on tests
+        # or lewagon/wait-on-check-action@master, but master is not guaranteed to be stable ATM
+        uses: lewagon/wait-on-check-action@v0.2
+        with:
+          ref: master # can be commit SHA or tag too
+          check-name: Maven Verify # name of the existing check - omit to wait for all checks
+          wait-interval: 20 # seconds
+      - name: Build, Push and Deploy to Heroku 
+        id: heroku 
+        uses: jctaveras/heroku-deploy@v1.0.0 
+        with: 
+          email: ${{ secrets.HEROKU_EMAIL }} 
+          api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
+          app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
+          dockerfile_path: './src/main/backend/Dockerfile' 
   frontend: 
     name: Frontend Build and Test 
     runs-on: ubuntu-latest 
@@ -70,18 +85,18 @@ jobs:
       run: npm run ci:frontend:build 
     - name: Test 
       run: npm run ci:frontend:test
-  deploy:
-    needs: [backend, frontend]
-    name: Deploy to heroku
-    runs-on: ubuntu-latest
-    steps: 
-    - name: Deploy to Heroku
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-          if [ ! -z "$HEROKU_API_KEY" ]; then
-              ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=todo-list-app-ba
-          else
-              echo No HEROKU_API_KEY, skipping...
-          fi
+    - name: Wait on tests
+        # or lewagon/wait-on-check-action@master, but master is not guaranteed to be stable ATM
+      uses: lewagon/wait-on-check-action@v0.2
+      with:
+          ref: master # can be commit SHA or tag too
+          check-name: Test # name of the existing check - omit to wait for all checks
+          wait-interval: 20 # seconds
+    - name: Build, Push and Deploy to Heroku 
+      id: heroku 
+      uses: jctaveras/heroku-deploy@v1.0.0 
+      with: 
+          email: ${{ secrets.HEROKU_EMAIL }} 
+          api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
+          app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplicationname 
+          dockerfile_path: './src/main/frontend/Dockerfile'
