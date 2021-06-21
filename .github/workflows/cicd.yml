@@ -71,6 +71,7 @@ jobs:
     - name: Test 
       run: npm run ci:frontend:test
   deploy:
+    needs: [backend, frontend]
     name: Deploy to heroku
     runs-on: ubuntu-latest
     steps: 
