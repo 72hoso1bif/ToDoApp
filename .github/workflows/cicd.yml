@@ -86,6 +86,7 @@ jobs:
         heroku_email: ${{ secrets.HEROKU_EMAIL }} 
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # your heroku api key
         heroku_app_name: todo-list-app-web-client # you aplicationname
+        buildpack: Node.js
       env:
         HD_APP_BASE: "src/web/client"
         HD_ANGULAR_APP_API_URL: "https://todo-list-app-ba.herokuapp.com"
