@@ -4,15 +4,11 @@ import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './helper/auth.gard';
 
 
-const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
-const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
-const toDoListModule = () => import('./toDolist/toDoList.module').then(x => x.ToDoListModule);
-
 const routes: Routes = [
   { path: '', component: HomeComponent},
-  { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] },
-  { path: 'toDoList', loadChildren: toDoListModule, canActivate: [AuthGuard] },
-  { path: 'account', loadChildren: accountModule },
+  { path: 'users', loadChildren: './users/users.module', canActivate: [AuthGuard] },
+  { path: 'toDoList', loadChildren: './toDolist/toDoList.module', canActivate: [AuthGuard] },
+  { path: 'account', loadChildren: './account/account.module' },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
