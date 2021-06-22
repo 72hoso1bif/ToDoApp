@@ -52,7 +52,6 @@ export class AuthService {
 
   setUserImageUrlIfUserHasImage() {
     if (this.userHasImage()) {
-      console.log(this.userValue);
       const reader = new FileReader();
       const blob = this.b64toBlob(this.userValue.image.content, 'image/png');
       reader.readAsDataURL(blob);
@@ -60,7 +59,7 @@ export class AuthService {
         this.setValue(reader.result);
       };
     } else {
-      this.userImgURLSubject.next('../../assets/default_profile_picture.png');
+      this.userImgURLSubject.next('src/main/webapp/assets/default_profile_picture.png');
     }
   }
 

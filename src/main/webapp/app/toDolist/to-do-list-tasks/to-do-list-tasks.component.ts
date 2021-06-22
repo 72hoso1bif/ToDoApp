@@ -119,7 +119,6 @@ export class ToDoListTasksComponent implements OnInit {
     } else {
       newName = this.toDoListName;
     }
-    console.log(newName);
     this.matToolTipValueForToDoListName = 'Click to edit Me';
     this.toDoListNameDisabled = true;
     const updatedToDoList: ToDoListDTO = {
@@ -127,7 +126,6 @@ export class ToDoListTasksComponent implements OnInit {
       name: newName,
       iconName: this.toDoListIconName
     };
-    console.log(updatedToDoList);
     this.toDoListService.updateTodo(updatedToDoList).subscribe(result => {
       this.toDoSharedDataService.updateToDoList();
     });
@@ -150,10 +148,8 @@ export class ToDoListTasksComponent implements OnInit {
   }
 
   deleteToDoList() {
-    console.log("auwawa");
     this.toDoListService.deleteTodo(this.toDoListId).subscribe(result => {
       this.toDoSharedDataService.updateToDoList();
-      console.log("auwawa");
       this.router.navigate(['']);
     });
   }
@@ -234,8 +230,6 @@ export class ToDoListTasksComponent implements OnInit {
 
   editToDoTask(task: ToDoListTask) {
     task.editMode = task.editMode !== true;
-    console.log(task.editMode);
-    console.log(task);
     this.openModalService.openToDoTaskDialog(this.toDoListId, this.toDoListName,
     task.editMode, [task]);
     task.editMode = task.editMode !== true;
