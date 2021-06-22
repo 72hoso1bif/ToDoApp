@@ -11,7 +11,7 @@ app.use(requireHTTPS);
 
 app.use(express.static('./dist/toDo-list'));
 
-app.get('/*', function(req, res) {
+app.get('/*', function(req, res,next) {
   res.sendFile('dist/toDo-list/index.html', {root: 'dist/toDo-list/'});
 });
 

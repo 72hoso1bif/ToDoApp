@@ -30,6 +30,7 @@ import { OrderByPipe } from './shared/pipes/order-by.pipe';
 import { HasAuthorityDirective } from './shared/directive/has-authority.directive';
 import { FilePickerDirective } from './shared/directive/file-picker.directive';
 import {UsersModule} from "./users/users.module";
+import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import {UsersModule} from "./users/users.module";
     MatChipsModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, ],
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide : LocationStrategy , useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
   entryComponents: [LogInComponent, TodoListComponent],
     exports: [

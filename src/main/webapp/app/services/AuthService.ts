@@ -60,7 +60,7 @@ export class AuthService {
         this.setValue(reader.result);
       };
     } else {
-      this.userImgURLSubject.next( '../../../assets/default_profile_picture.png');
+      this.userImgURLSubject.next('../../assets/default_profile_picture.png');
     }
   }
 
