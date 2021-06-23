@@ -24,37 +24,32 @@ export class LogInComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
     public dialogRef: MatDialogRef<LogInComponent>,
-    private dialog: MatDialog,
     private openModalService: OpenModalService,
-    private toDoListService: ToDoListService,
     private toDoSharedDataService: ToDoSharedDataService,
 
   ) {
-    // redirect to home if already logged in
+
     if (this.authService.userValue) {
       this.router.navigate(['/']);
     }
-  }
 
-  ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
 
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+  ngOnInit() {
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
-  onSubmit() {
+  onSubmit(user) {
     this.submitted = true;
 
     // reset alerts on submit
@@ -65,16 +60,19 @@ export class LogInComponent implements OnInit {
       return;
     }
 
+    user = {
+      username: user.username,
+      password: user.password
+    }
+
     this.loading = true;
-    this.authService.login({username: this.f.username.value, password: this.f.password.value})
+    this.authService.login(user)
       .pipe(first())
       .subscribe(
         data => {
-          this.dialogRef.close();
-          // this.toDoListService.getToDoListByUserId().subscribe(todos => {
-          //   this.router.navigate([this.returnUrl]);
-          // });
           this.toDoSharedDataService.updateToDoList();
+          this.router.navigate(['/']);
+          this.dialogRef.close();
         },
         error => {
           this.alertService.error(error, {autoClose: true});

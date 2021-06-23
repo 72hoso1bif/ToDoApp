@@ -61,6 +61,7 @@ export class UserProfileComponent implements OnInit {
     this.user = this.authService.userValue;
     this.authService.userImgURL.subscribe(value => this.currentImgUrl = value);
     this.hasImgUrlSubject.subscribe(value => this.hasImgUrl = value);
+
   }
 
 
@@ -80,12 +81,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   setCurrentImgUrl() {
-    if (this.userHasImage()) {
-      this.currentImgUrl = this.authService.userImageUrl;
-    } else if (this.uploadedImgURL !== null) {
+     if (this.uploadedImgURL !== null) {
       this.currentImgUrl = this.uploadedImgURL;
     } else {
-      this.currentImgUrl = '../../../assets/default_profile_picture.png';
+      this.currentImgUrl = this.authService.userImageUrl;
     }
   }
 
@@ -107,12 +106,7 @@ export class UserProfileComponent implements OnInit {
   _onReset() {
     this._selectedFiles = null;
     this.uploadedImgURL = null;
-    if (this.userHasImage()) {
-      this.currentImgUrl = this.authService.userImageUrl;
-    } else {
-      this.currentImgUrl = '../../../assets/default_profile_picture.png';
-    }
-
+    this.currentImgUrl = this.authService.userImageUrl;
   }
 
   _reset() {

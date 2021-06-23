@@ -6,23 +6,27 @@
       </div>
       <div fxLayout="column">
         <form [formGroup]="loginForm">
-          <mat-form-field fxLayout="column">
-            <input matInput placeholder="Benutzername" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
-            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-              <div *ngIf="f.username.errors.required">Benutzername wird benötigt</div>
-            </div>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput type="password" placeholder="Passwort" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-              <div *ngIf="f.password.errors.required">Passwort wird benötigt</div>
-            </div>
-          </mat-form-field>
+          <div id="username-container">
+            <mat-form-field fxLayout="column">
+              <input matInput placeholder="Benutzername" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">Benutzername wird benötigt</div>
+              </div>
+            </mat-form-field>
+          </div>
+          <div id="password-container">
+            <mat-form-field>
+              <input matInput type="password" placeholder="Passwort" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Passwort wird benötigt</div>
+              </div>
+            </mat-form-field>
+          </div>
         </form>
       </div>
       <mat-dialog-actions>
         <div class="submit">
-          <button [disabled]="loading" (click)="onSubmit()" mat-raised-button color="primary">
+          <button [disabled]="loading" (click)="onSubmit(loginForm.value)" mat-raised-button color="primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Anmelden
           </button>

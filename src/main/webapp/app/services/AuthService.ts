@@ -59,7 +59,7 @@ export class AuthService {
         this.setValue(reader.result);
       };
     } else {
-      this.userImgURLSubject.next('dist/toDo-list/main/webapp/assets/default_profile_picture.png');
+      this.userImgURLSubject.next(require('src/main/webapp/assets/default_profile_picture.png'));
     }
   }
 

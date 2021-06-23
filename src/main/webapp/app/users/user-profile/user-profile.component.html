@@ -3,7 +3,7 @@
     <mat-card class="user-profile-container-card">
       <div class="user-profile-container-card-header" fxLayout="row">
         <div class="user-profile-container-card-header-avatar">
-          <div mat-card-avatar class="user-profile-container-card-header-avatar--image"(click)="imageZoom($event)" id="avatar" *ngIf="isAuthenticated()"  [style.background]="'url(' + currentImgUrl + ')'"></div>
+          <div mat-card-avatar class="user-profile-container-card-header-avatar--image" (click)="imageZoom($event)" id="avatar" *ngIf="isAuthenticated()"  [style.background]="'url(' + currentImgUrl + ')'"></div>
           <button *ngIf="imageEditButtonVisible" mat-mini-fab class="user-profile-container-card-header-avatar--edit-button"
                   #buttonPicker="appFilePicker" appFilePicker (filesChanged)="_onFilesChanged($event)" (filesReset)="_onReset()" color="primary">
             <mat-icon>edit</mat-icon>

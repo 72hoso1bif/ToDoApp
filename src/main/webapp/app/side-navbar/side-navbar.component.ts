@@ -18,7 +18,6 @@ import {ToDoTaskService} from "../services/ToDoTaskService";
 })
 export class SideNavbarComponent implements OnInit, OnChanges {
 
-  subscription = new Subscription();
 
   user: User;
 
@@ -27,13 +26,7 @@ export class SideNavbarComponent implements OnInit, OnChanges {
 
   userImgUrl: string | ArrayBuffer;
 
-  dailyCount: number;
-  importantCount: number;
-  missedCount: number;
-  weeklyCount: number;
-
   isPermitted: boolean;
-  removable = true;
 
   constructor(
     private authService: AuthService,
@@ -44,7 +37,6 @@ export class SideNavbarComponent implements OnInit, OnChanges {
     this.toDoListsSubject = this.toDoSharedDataService.toDoListSubject;
     this.toDoSharedDataService.toDoListSubject.subscribe(value => this.toDoLists = value);
     this.authService.userImgURL.subscribe(value => this.userImgUrl = value);
-
   }
 
   ngOnInit() {
@@ -63,17 +55,8 @@ export class SideNavbarComponent implements OnInit, OnChanges {
     return this.authService.isAuthenticated();
   }
 
-  userHasImage(): boolean {
-    return this.authService.userHasImage();
-  }
-
   loadTodosWhenAuth(): void {
     this.toDoSharedDataService.updateToDoList();
-    if (this.userHasImage()) {
-      this.userImgUrl = this.authService.userImageUrl;
-    } else {
-      this.userImgUrl = '../../../assets/default_profile_picture.png';
-    }
   }
 
   removeChip(element: ToDoList) {

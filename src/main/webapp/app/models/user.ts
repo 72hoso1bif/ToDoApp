@@ -1,12 +1,12 @@
 export class User {
-  id: string;
+  id?: string;
   email: string;
   username: string;
   password: string;
-  roles: any;
-  tokenType: string;
-  accessToken: string;
-  image: Image;
+  roles?: any;
+  tokenType?: string;
+  accessToken?: string;
+  image?: Image;
 }
 
 export class UserDTO {
