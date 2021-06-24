@@ -113,9 +113,11 @@ export class SideNavbarComponent implements OnInit, OnChanges {
     }
   }
   decreaseSideBar(){
-  if(!this.isMobile) {
-      this.navbarWidth.emit(20);
-      this.isMobile = true;
+    if(this.windowSizeIsLow){
+      if(!this.isMobile) {
+        this.navbarWidth.emit(20);
+        this.isMobile = true;
+      }
     }
   }
 }
