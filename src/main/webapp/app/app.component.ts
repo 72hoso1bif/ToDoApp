@@ -1,13 +1,5 @@
-import {Component, OnInit, OnChanges, SimpleChanges, OnDestroy} from '@angular/core';
-import {User} from './models';
-import {AuthService} from './services/AuthService';
-import {OpenModalService} from './services/openModalService';
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToDoList} from "./models/todolist";
-import {ToDoListService} from "./services/ToDoListService";
-import {AlertService} from "./services/alert.service";
-import {ToDoTaskService} from "./services/ToDoTaskService";
-import {Title} from "@angular/platform-browser";
+import {Component, OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app',
@@ -17,6 +9,8 @@ import {Title} from "@angular/platform-browser";
 export class AppComponent implements OnInit {
 
 
+  width: number;
+
   constructor() {
   }
 
@@ -25,4 +19,7 @@ export class AppComponent implements OnInit {
 
   }
 
+  setWidth(newWidth: number) {
+    this.width = newWidth;
+  }
 }

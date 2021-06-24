@@ -1,7 +1,7 @@
 <div class="main-container">
   <mat-drawer-container>
-    <mat-drawer class="side-nav-container" mode="side" opened>
-      <app-side-navbar></app-side-navbar>
+    <mat-drawer [style.width.%]="width" class="side-nav-container" mode="side" opened>
+      <app-side-navbar (navbarWidth)="setWidth($event)"></app-side-navbar>
     </mat-drawer>
     <mat-drawer-content>
       <div class="app-container" [class.bg-light]="true">

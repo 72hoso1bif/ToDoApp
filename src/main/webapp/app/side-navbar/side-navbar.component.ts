@@ -1,4 +1,14 @@
-import {Component, HostListener, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {AuthService} from "../services/AuthService";
 import {ToDoListService} from "../services/ToDoListService";
 import {ToDoList} from "../models/todolist";
@@ -21,17 +31,22 @@ export class SideNavbarComponent implements OnInit, OnChanges {
 
   user: User;
 
+  @Output()
+  navbarWidth = new EventEmitter<number>();
+
   toDoListsSubject: BehaviorSubject<ToDoList[]>;
   toDoLists: ToDoList[] = [];
   userImgUrl: string | ArrayBuffer;
   isPermitted: boolean;
   isMobile = false;
+  windowSizeIsLow = window.screen.width < 840;
 
   constructor(
     private authService: AuthService,
     public toDoSharedDataService: ToDoSharedDataService,
     private toDoTaskService: ToDoTaskService,
-    private openModalService: OpenModalService
+    private openModalService: OpenModalService,
+    private elRef: ElementRef
   ) {
     this.toDoListsSubject = this.toDoSharedDataService.toDoListSubject;
     this.toDoSharedDataService.toDoListSubject.subscribe(value => this.toDoLists = value);
@@ -40,14 +55,15 @@ export class SideNavbarComponent implements OnInit, OnChanges {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.isMobile = window.screen.width < 840;
+    this.windowSizeIsLow = window.screen.width < 840;
+    this.isMobile = this.windowSizeIsLow;
   }
 
   ngOnInit() {
     if (this.isAuthenticated()) {
       this.loadTodosWhenAuth();
     }
-    if (window.screen.width < 840) {
+    if (this.windowSizeIsLow) {
       this.isMobile = true;
     }
   }
@@ -86,4 +102,15 @@ export class SideNavbarComponent implements OnInit, OnChanges {
     this.authService.logout();
   }
 
+  increaseSideBar() {
+    if (this.windowSizeIsLow) {
+      if (this.isMobile) {
+        this.navbarWidth.emit(60);
+        this.isMobile = false;
+      } else {
+        this.navbarWidth.emit(20);
+        this.isMobile = true;
+      }
+    }
+  }
 }
