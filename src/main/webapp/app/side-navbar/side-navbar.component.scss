@@ -23,7 +23,7 @@
         color: #0174fc;
 
         @if $isAvatar {
-          margin-right: 12px;
+          margin-right: 4px;
           height: 30px;
           width: 30px;
           border-radius: 20px;
@@ -43,7 +43,6 @@
       }
 
       &--chip-list {
-
         margin-left: 12px;
 
         :first-child{

@@ -85,24 +85,24 @@
     </div>
   </div>
 
-  <div *ngSwitchCase="false" class="nav-link-entry">
+  <div *ngSwitchCase="false" (click)="openLoginDialog()" class="nav-link-entry">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>login</mat-icon></span>
-      <a *ngIf="!isMobile" class="nav-link-entry-content--link" (click)="openLoginDialog()">Login</a>
+      <a *ngIf="!isMobile" class="nav-link-entry-content--link" >Login</a>
       <span></span>
     </div>
   </div>
-  <div *ngSwitchCase="false" class="nav-link-entry">
+  <div *ngSwitchCase="false" (click)="openRegisterDialog()" class="nav-link-entry">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>person_outline</mat-icon></span>
-      <a *ngIf="!isMobile" class="nav-link-entry-content--link" (click)="openRegisterDialog()">SignUp</a>
+      <a *ngIf="!isMobile" class="nav-link-entry-content--link">SignUp</a>
       <span></span>
     </div>
   </div>
-  <div *ngSwitchCase="true" class="nav-link-entry">
+  <div *ngSwitchCase="true" (click)="logout()" class="nav-link-entry">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>logout</mat-icon></span>
-      <a *ngIf="!isMobile" class="nav-link-entry-content--link" (click)="logout()">Logout</a>
+      <a *ngIf="!isMobile" class="nav-link-entry-content--link">Logout</a>
       <span></span>
     </div>
   </div>
