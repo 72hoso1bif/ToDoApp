@@ -1,6 +1,5 @@
 .todo-list-tasks-container {
   margin: 40px;
-  overflow: hidden;
 
   &--header{
     margin-bottom: 40px;
@@ -106,7 +105,7 @@
 @media screen and (max-width: 840px){
   .todo-list-tasks-container {
     margin: 2px;
-    overflow: hidden;
+    overflow: scroll;
   }
 }
 

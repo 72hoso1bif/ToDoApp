@@ -2,14 +2,14 @@
   <div class="nav-link-entry" routerLink="/">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>home</mat-icon></span>
-      <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="decreaseSideBar()">Home</a>
       <span></span>
     </div>
   </div>
 
   <hr *ngSwitchCase="true">
 
-  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{daily: 'daily'}">
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{daily: 'daily'}" (click)="decreaseSideBar()">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>wb_sunny</mat-icon></span>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active">My Day</a>
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{important: 'important'}">
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{important: 'important'}" (click)="decreaseSideBar()">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>grade</mat-icon></span>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active">Important</a>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{missed: 'missed'}" >
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{missed: 'missed'}" (click)="decreaseSideBar()">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>call_missed</mat-icon></span>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active">Missed</a>
@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{weekly: 'weekly'}" >
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/toDoList" [queryParams]="{weekly: 'weekly'}" (click)="decreaseSideBar()" >
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>event</mat-icon></span>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active">Weekly</a>
@@ -45,7 +45,7 @@
 
   <div *ngSwitchCase="true">
     <div class="nav-link-entry" *ngFor="let todos of toDoLists | orderBy " routerLink="/toDoList"
-         [queryParams]="todos">
+         [queryParams]="todos" (click)="decreaseSideBar()">
       <div class="nav-link-entry-content">
         <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>{{todos.iconName}}</mat-icon></span>
         <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active">{{todos.name}}</a>
@@ -69,7 +69,7 @@
 
   <hr>
 
-  <div *appHasAuthority="'ROLE_ADMIN' || 'ROLE_MOD'" class="nav-link-entry" routerLink="/users/list">
+  <div *appHasAuthority="'ROLE_ADMIN' || 'ROLE_MOD'" class="nav-link-entry" routerLink="/users/list" (click)="decreaseSideBar()">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>person</mat-icon></span>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active">Users</a>
@@ -77,7 +77,7 @@
     </div>
   </div>
 
-  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/users/profile">
+  <div *ngSwitchCase="true" class="nav-link-entry" routerLink="/users/profile" (click)="decreaseSideBar()">
     <div class="nav-link-entry-content">
       <div mat-card-avatar *ngIf="isAuthenticated()" class="nav-link-entry-content--avatar" [style.background]="'url(' + userImgUrl + ')'"></div>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active">Profile</a>
@@ -85,21 +85,21 @@
     </div>
   </div>
 
-  <div *ngSwitchCase="false" (click)="openLoginDialog()" class="nav-link-entry">
+  <div *ngSwitchCase="false" (click)="openLoginDialog(); decreaseSideBar();" class="nav-link-entry">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>login</mat-icon></span>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link" >Login</a>
       <span></span>
     </div>
   </div>
-  <div *ngSwitchCase="false" (click)="openRegisterDialog()" class="nav-link-entry">
+  <div *ngSwitchCase="false" (click)="openRegisterDialog(); decreaseSideBar();" class="nav-link-entry">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>person_outline</mat-icon></span>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link">SignUp</a>
       <span></span>
     </div>
   </div>
-  <div *ngSwitchCase="true" (click)="logout()" class="nav-link-entry">
+  <div *ngSwitchCase="true" (click)="logout(); decreaseSideBar();" class="nav-link-entry">
     <div class="nav-link-entry-content">
       <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>logout</mat-icon></span>
       <a *ngIf="!isMobile" class="nav-link-entry-content--link">Logout</a>
