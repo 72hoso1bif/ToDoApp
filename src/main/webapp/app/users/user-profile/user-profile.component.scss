@@ -2,16 +2,23 @@
   display: flex;
   width: auto;
 
+
   .user-profile-container-card {
     width: 50%;
     margin: 20px auto;
     height: auto;
 
-
     .user-profile-container-card-header {
 
       .user-profile-container-card-header-button {
         margin-left: 20px;
+
+      }
+
+      @media screen and (max-width: 840px) {
+        .user-profile-container-card-header-button {
+          margin-left: 0;
+        }
       }
 
       .user-profile-container-card-header-avatar{
@@ -39,7 +46,9 @@
           bottom: 0;
           right: 0;
           outline: none;
+
         }
+
       }
 
       .user-profile-container-card-header-text {
@@ -77,9 +86,23 @@
       }
     }
   }
+
+  @media screen and (max-width: 840px) {
+    .user-profile-container-card {
+      width: 85%;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .user-profile-container-card {
+      width: 100%;
+    }
+  }
 }
 
-
+.mat-menu-item{
+  outline: none !important;
+}
 
 
 

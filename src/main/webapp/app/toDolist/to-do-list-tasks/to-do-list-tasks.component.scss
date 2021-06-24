@@ -102,6 +102,14 @@
   }
 }
 
+@media screen and (max-width: 840px) {
+  .todo-list-tasks-container {
+    margin: 2px;
+    overflow: scroll;
+  }
+}
+
+
 :focus {
   outline:none;
 }

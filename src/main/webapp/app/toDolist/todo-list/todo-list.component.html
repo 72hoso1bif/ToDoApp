@@ -2,7 +2,7 @@
   <div fxLayout="row" fxLayoutAlign="center center" class="login-main">
     <div>
       <div class="header">
-        <h2>Kategorie</h2>
+        <h2>Categories</h2>
       </div>
       <div fxLayout="column">
         <form [formGroup]="toDoListForm">
@@ -43,7 +43,7 @@
         <div class="submit">
           <button [disabled]="loading" (click)="onSubmit()" mat-raised-button color="primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Erstellen
+            create
           </button>
         </div>
       </mat-dialog-actions>

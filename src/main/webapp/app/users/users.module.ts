@@ -23,6 +23,8 @@ import {MatDividerModule} from "@angular/material/divider";
 import {FilePickerDirective} from "../shared/directive/file-picker.directive";
 import {LogInComponent} from "../account/log-in/log-in.component";
 import {TodoListComponent} from "../toDolist/todo-list/todo-list.component";
+import {MatMenuModule} from "@angular/material/menu";
+import {AlertModule} from "../alert/alert.module";
 
 @NgModule({
   imports: [
@@ -42,7 +44,9 @@ import {TodoListComponent} from "../toDolist/todo-list/todo-list.component";
     MatCardModule,
     MatToolbarModule,
     MatTabsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatMenuModule,
+    AlertModule
   ],
   declarations: [
     LayoutComponent,

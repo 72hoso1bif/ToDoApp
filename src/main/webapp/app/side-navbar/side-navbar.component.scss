@@ -8,6 +8,13 @@
       margin-left: auto;
     }
 
+    @media screen and (max-width: 840px) {
+      :last-child {
+        margin-left: 2px;
+      }
+    }
+
+
     .nav-link-entry-content {
 
       @mixin icon($isAvatar: false) {

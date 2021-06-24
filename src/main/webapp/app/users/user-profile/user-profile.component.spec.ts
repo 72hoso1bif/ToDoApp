@@ -14,6 +14,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../models";
 import {AuthService} from "../../services/AuthService";
+import {MatMenu, MatMenuModule} from "@angular/material/menu";
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -31,6 +32,7 @@ describe('UserProfileComponent', () => {
         MatInputModule,
         MatIconModule,
         MatTooltipModule,
+        MatMenuModule
       ],
       providers: [{provide: ActivatedRoute, userValue: {}}, {provide: Router, userValue: {}}, AuthService],
       declarations: [

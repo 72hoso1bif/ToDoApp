@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, HostListener, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {AuthService} from "../services/AuthService";
 import {ToDoListService} from "../services/ToDoListService";
 import {ToDoList} from "../models/todolist";
@@ -23,10 +23,9 @@ export class SideNavbarComponent implements OnInit, OnChanges {
 
   toDoListsSubject: BehaviorSubject<ToDoList[]>;
   toDoLists: ToDoList[] = [];
-
   userImgUrl: string | ArrayBuffer;
-
   isPermitted: boolean;
+  isMobile = false;
 
   constructor(
     private authService: AuthService,
@@ -39,9 +38,17 @@ export class SideNavbarComponent implements OnInit, OnChanges {
     this.authService.userImgURL.subscribe(value => this.userImgUrl = value);
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.isMobile = window.screen.width < 840;
+  }
+
   ngOnInit() {
     if (this.isAuthenticated()) {
       this.loadTodosWhenAuth();
+    }
+    if (window.screen.width < 840) {
+      this.isMobile = true;
     }
   }
 

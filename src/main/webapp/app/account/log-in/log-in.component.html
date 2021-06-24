@@ -2,15 +2,15 @@
   <div fxLayout="row" fxLayoutAlign="center center" class="login-main">
     <div>
       <div class="header">
-        <h2>Anmeldung</h2>
+        <h2>Login</h2>
       </div>
       <div fxLayout="column">
         <form [formGroup]="loginForm">
           <div id="username-container">
             <mat-form-field fxLayout="column">
-              <input matInput placeholder="Benutzername" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+              <input matInput placeholder="username" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
               <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                <div *ngIf="f.username.errors.required">Benutzername wird benötigt</div>
+                <div *ngIf="f.username.errors.required">username is required</div>
               </div>
             </mat-form-field>
           </div>
@@ -18,7 +18,7 @@
             <mat-form-field>
               <input matInput type="password" placeholder="Passwort" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
               <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                <div *ngIf="f.password.errors.required">Passwort wird benötigt</div>
+                <div *ngIf="f.password.errors.required">password is required</div>
               </div>
             </mat-form-field>
           </div>
@@ -28,11 +28,11 @@
         <div class="submit">
           <button [disabled]="loading" (click)="onSubmit(loginForm.value)" mat-raised-button color="primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Anmelden
+            Login
           </button>
         </div>
         <div>
-          <a (click)="openRegisterDialog()">Registrieren</a>
+          <a (click)="openRegisterDialog()">Signup</a>
         </div>
       </mat-dialog-actions>
     </div>

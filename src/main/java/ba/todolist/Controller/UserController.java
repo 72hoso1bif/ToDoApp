@@ -62,7 +62,11 @@ public class UserController {
             if(updatedUser.getPassword() != null){
                 user.setPassword(encoder.encode(updatedUser.getPassword()));
             }
-            user.setImage(imageRepository.findById(updatedUser.getImageId()).get());
+            if (updatedUser.getImageId() == null){
+              user.setImage(null);
+            } else {
+              user.setImage(imageRepository.findById(updatedUser.getImageId()).get());
+            }
             return userRepository.save(user);
         });
     }

@@ -51,9 +51,9 @@ export class ToDoListTaskModalComponent implements OnInit {
       this.f.taskName.setValue(this.inEditModeValues[0].taskName);
       this.f.endAt.setValue(this.inEditModeValues[0].endAt);
       this.f.important.setValue(this.inEditModeValues[0].important);
-      this.buttonText = 'Speichern';
+      this.buttonText = 'save';
     } else {
-      this.buttonText = 'Erstellen';
+      this.buttonText = 'create';
     }
 
     this.returnUrl = this.router.url;

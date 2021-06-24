@@ -22,31 +22,25 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
     public dialogRef: MatDialogRef<RegisterComponent>,
-    public dialog: MatDialog,
     public openModalService: OpenModalService
   ) {
-
-  }
-
-  ngOnInit() {
     this.form = this.formBuilder.group({
       email: new FormControl('', [ Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'), Validators.maxLength(50)]),
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]]
     });
-
   }
+
+  ngOnInit() {}
 
   // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
-  onSubmit() {
+  onSubmit(newUser) {
     this.submitted = true;
 
     // reset alerts on submit
@@ -58,7 +52,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authService.register(this.form.value)
+    this.authService.register(newUser)
       .pipe(first())
       .subscribe(
         data => {

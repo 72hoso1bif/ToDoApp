@@ -24,6 +24,16 @@
         }
       }
     }
+    @media screen and (max-width: 840px) {
+      .home-container-card {
+        width: 90%;
+      }
+    }
   }
 }
 
+@media screen and (max-width: 840px) {
+  .home-container {
+   overflow: scroll;
+  }
+}

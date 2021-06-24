@@ -4,10 +4,15 @@
       <div class="user-profile-container-card-header" fxLayout="row">
         <div class="user-profile-container-card-header-avatar">
           <div mat-card-avatar class="user-profile-container-card-header-avatar--image" (click)="imageZoom($event)" id="avatar" *ngIf="isAuthenticated()"  [style.background]="'url(' + currentImgUrl + ')'"></div>
-          <button *ngIf="imageEditButtonVisible" mat-mini-fab class="user-profile-container-card-header-avatar--edit-button"
-                  #buttonPicker="appFilePicker" appFilePicker (filesChanged)="_onFilesChanged($event)" (filesReset)="_onReset()" color="primary">
+          <button *ngIf="imageEditButtonVisible" mat-mini-fab [matMenuTriggerFor]="menu" class="user-profile-container-card-header-avatar--edit-button" color="primary">
             <mat-icon>edit</mat-icon>
           </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item #buttonPicker="appFilePicker" appFilePicker (filesChanged)="_onFilesChanged($event)" (filesReset)="_onReset()">
+              <mat-icon>add</mat-icon><span>add</span>
+            </button>
+            <button mat-menu-item (click)="deleteImage()"><mat-icon>delete</mat-icon><span>delete</span></button>
+          </mat-menu>
         </div>
         <div class="user-profile-container-card-header-text">
           <mat-card-title class="user-profile-container-card-header-text--title">
@@ -53,7 +58,7 @@
       <div class="user-profile-card-container-buttons">
         <button  [disabled]="loading" (click)="onSubmit()" mat-raised-button color="primary">
           <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-          Speichern
+          save
         </button>
       </div>
     </mat-card>

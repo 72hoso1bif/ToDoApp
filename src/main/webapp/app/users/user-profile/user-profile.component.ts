@@ -58,7 +58,7 @@ export class UserProfileComponent implements OnInit {
     private imageService: ImageService,
     private titleService: Title
   ) {
-    this.user = this.authService.userValue;
+    this.authService.getUser.subscribe(value => this.user = value);
     this.authService.userImgURL.subscribe(value => this.currentImgUrl = value);
     this.hasImgUrlSubject.subscribe(value => this.hasImgUrl = value);
 
@@ -158,6 +158,18 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+
+
+
+  deleteImage(){
+    if(this.user.image){
+      this.updateUser(null);
+    } else {
+      this.alertService.warn("User has no Image to delete", { keepAfterRouteChange: true , autoClose: true});
+    }
+  }
+
+
   private createUser() {
     this.authService.register(this.userProfileForm.value)
       .pipe(first())
@@ -197,7 +209,6 @@ export class UserProfileComponent implements OnInit {
         data => {
           this.loading = false;
           this.alertService.success('Update successful', { keepAfterRouteChange: true , autoClose: true});
-          this.router.navigate(['']);
         },
         error => {
           this.alertService.error(error, {autoClose: true});

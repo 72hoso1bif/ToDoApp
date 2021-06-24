@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
 const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 const authServiceSpy = jasmine.createSpyObj('AuthService', ['login']);
 const matDialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
-const openModalServiceSpy = jasmine.createSpyObj('OpenModalService', ['openLoginDialog']);
+const openModalServiceSpy = jasmine.createSpyObj('OpenModalService', ['openRegisterDialog']);
 const toDoSharedDataServiceSpy = jasmine.createSpyObj('ToDoSharedDataService', ['updateToDoList']);
 const alertServiceSpy = jasmine.createSpyObj('AlertService', ['clear','error']);
 
@@ -28,8 +28,8 @@ describe('Login Component Isolated Test', () => {
     component = new LogInComponent(new FormBuilder(), routerSpy, authServiceSpy, alertServiceSpy, matDialogRefSpy, openModalServiceSpy, toDoSharedDataServiceSpy);
   }));
 
-  function updateForm(userEmail, userPassword) {
-    component.loginForm.controls['username'].setValue(userEmail);
+  function updateForm(userName, userPassword) {
+    component.loginForm.controls['username'].setValue(userName);
     component.loginForm.controls['password'].setValue(userPassword);
   }
 
@@ -98,7 +98,7 @@ describe('Login Component Shallow Test', () => {
 
     const usernameErrorMsg = fixture.debugElement.nativeElement.querySelector('.invalid-feedback');
     expect(usernameErrorMsg).toBeDefined();
-    expect(usernameErrorMsg.innerHTML).toContain('Benutzername wird benötigt');
+    expect(usernameErrorMsg.innerHTML).toContain('username is required');
   });
 
   it('Display Password Error Msg when Username is blank', () => {
@@ -111,7 +111,7 @@ describe('Login Component Shallow Test', () => {
 
     const passwordErrorMsg = fixture.debugElement.nativeElement.querySelector('.invalid-feedback');
     expect(passwordErrorMsg).toBeDefined();
-    expect(passwordErrorMsg.innerHTML).toContain('Passwort wird benötigt');
+    expect(passwordErrorMsg.innerHTML).toContain('password is required');
   });
 
 
@@ -166,7 +166,7 @@ describe('Login Component Integrated Test', () => {
 
   }));
 
-  it('loginService login() should called ', fakeAsync(() => {
+  it('authService login() should called ', fakeAsync(() => {
     updateForm(validUser.username, validUser.password);
     fixture.detectChanges();
     const button = fixture.debugElement.nativeElement.querySelector('button');
