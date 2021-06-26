@@ -1,36 +1,34 @@
-<div class="users-list-header-container">
-  <h1>Users</h1>
-  <a routerLink="add" class="btn btn-sm btn-success mb-2">Add User</a>
+<div *ngIf="isDeleting" class="spinner-container">
+  <mat-spinner></mat-spinner>
 </div>
-
 <div class="users-list-table-container mat-elevation-z8">
-
-  <div class="spinner-container">
-    <mat-spinner></mat-spinner>
-  </div>
-
-  <table #table mat-table [dataSource]="dataSource" matSort>
+  <table mat-table matSort class="users-list-table-container--table" [dataSource]="dataSource">
 
     <!-- Email Column-->
     <ng-container matColumnDef="Email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td mat-cell  *matCellDef="let element">
+        <input  [value]="element.email" type="text" matInput [readonly]="!element.editMode" #email>
+      </td>
     </ng-container>
 
     <!-- Username Column -->
     <ng-container matColumnDef="Username">
-      <th mat-header-cell *matHeaderCellDef> Username </th>
-      <td mat-cell  *matCellDef="let element"> {{element.username}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+      <td mat-cell  *matCellDef="let element">
+        <input  [value]="element.username" type="text" matInput  [readonly]="true" [matTooltip]="element.editMode?'You can\'t change your login name!': null">
+      </td>
     </ng-container>
 
     <!-- Role Column -->
     <ng-container matColumnDef="Role">
       <th mat-header-cell *matHeaderCellDef> Role </th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" [matTooltip]="element.editMode && !hasErrors?'Enter new Value in upper line with comma': null">
         <div *ngIf="element">
-          <ng-container  *ngFor="let role of element?.roles">
-            <div >
-              <span>{{role.name}}</span>
+          <ng-container  *ngFor="let role of element?.roles; let i = index" [attr.data-index]="i">
+            <div fxLayout="row" class="users-list-table-container--table--role-container">
+              <input [style.text-decoration]="hasErrors?'underline':'none'"  [style.text-decoration-color]="hasErrors?'red':'none'" matTooltip="{{hasErrors?'Should look like \'ROLE_ADMIN,ROLE_USER':null}}" [value]="role.name" type="text" matInput  [readonly]="!element.editMode" #roles>
+              <button mat-icon-button [disabled]="!element.editMode" (click)='deleteRoleAndUpdateUser(role.name, element)'><mat-icon color="warn">close</mat-icon></button>
             </div>
           </ng-container>
         </div>
@@ -38,21 +36,31 @@
     </ng-container>
 
     <!-- Action Column -->
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <button mat-icon-button matTooltip="Click to Edit" class="iconbutton mat-icon-button mat-primary" color="primary" routerLink="profile/" routerLinkActive="active">
-        <mat-icon class="mat-icon material-icons" role="img">edit</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Click to Delete" class="iconbutton mat-icon-button mat-primary" *ngIf="element" (click)="deleteUser(element.id)" color="warn">
-          <mat-icon class="mat-icon material-icons">delete</mat-icon>
-        </button>
-      </mat-cell>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let row; let i = index">
+            <span style="display: flex;">
+              <button *ngIf="!row.editMode" mat-icon-button  color="primary" focusable="false" (click)="startEdit(row)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button *ngIf="row.editMode" mat-icon-button  color="primary" focusable="false" (click)="confirmEditCreate(row)">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" focusable="false" (click)="cancelOrDelete(row, i)">
+                <mat-icon>{{row.editMode ? 'close' : 'delete'}}</mat-icon>
+              </button>
+            </span>
+      </td>
     </ng-container>
 
-     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="row.editMode ? 'editable' : 'readonly'"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator #paginator
+                 [length]="dataSource.getValue.length"
+                 [pageIndex]="0"
+                 [pageSize]="5"
+                 [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
 </div>

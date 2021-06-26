@@ -29,7 +29,7 @@ export class HasAuthorityDirective implements OnDestroy {
     this.authorities = typeof value === 'string' ? [value] : value;
     this.updateView();
     // Get notified each time authentication state changes.
-    this.authenticationSubscription = this.authService.getUser.subscribe(() => this.updateView());
+    this.authenticationSubscription = this.authService.getUserSubject.subscribe(() => this.updateView());
   }
 
   ngOnDestroy(): void {

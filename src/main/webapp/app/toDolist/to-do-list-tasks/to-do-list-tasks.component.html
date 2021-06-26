@@ -27,7 +27,7 @@
       <div class="todo-list-tasks-container--board--todo--box" *ngFor="let todo of todoListTask" cdkDrag>
         <mat-card class="todo-list-tasks-container--board--todo--card">
           <mat-card-content class="todo-list-tasks-container--board--todo--card--card-content">
-            <div class="todo-list-tasks-container--board--todo--card--card-content-text" (click)="editToDoTask(todo)">{{todo.taskName}}</div>
+            <div class="todo-list-tasks-container--board--todo--card--card-content-text" matTooltip="Click to edit Task" (click)="editToDoTask(todo)">{{todo.taskName}}</div>
             <br/>
             <div class="todo-list-tasks-container--board--todo--card--card-content-actions">
               <div>

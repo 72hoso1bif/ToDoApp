@@ -7,6 +7,7 @@ export class User {
   tokenType?: string;
   accessToken?: string;
   image?: Image;
+  editMode?: boolean;
 }
 
 export class UserDTO {

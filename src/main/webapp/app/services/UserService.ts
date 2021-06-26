@@ -41,6 +41,22 @@ export class UserService {
       }));
   }
 
+  updateByAdmin(id, newUser) {
+    return this.http.put(`${environment.apiUrl}/api/users/update/${id}`, newUser,
+      this.authService.createHeaderOption(false, '', '', '', ''))
+      .pipe(map(x => {
+        // update stored user if the logged in user updated their own record
+        if (id === this.authService.userValue.id) {
+          this.getById(this.authService.userValue.id).subscribe(user => {
+            this.authService.getUserSubject.next(user);
+            this.authService.setUserImageUrlIfUserHasImage();
+            localStorage.setItem('user', JSON.stringify(user));
+          });
+        }
+        return x;
+      }));
+  }
+
   delete(id: string) {
     return this.http.delete(`${environment.apiUrl}/api/users/delete/${id}`, this.authService.createHeaderOption(false, '', '', '', ''))
       .pipe(map(x => {

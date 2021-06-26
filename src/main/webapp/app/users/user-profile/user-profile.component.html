@@ -30,7 +30,7 @@
         <form [formGroup]="userProfileForm" >
         <mat-form-field class="user-profile-card-container-content--field" fxLayout="column">
           <mat-label>Username</mat-label>
-          <input matInput type="text" placeholder="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+          <input matInput type="text" placeholder="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" [readonly]="true" matTooltip="You cannot change your Login Name">
           <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
             <div *ngIf="f.username.errors.required">Username is required</div>
             <div *ngIf="f.username.errors.minlength">Username must be at least 3 characters</div>

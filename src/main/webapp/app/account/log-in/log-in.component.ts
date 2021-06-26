@@ -75,6 +75,9 @@ export class LogInComponent implements OnInit {
           this.dialogRef.close();
         },
         error => {
+          if(error.includes('Bad credentials')){
+            error = 'Incorrect username or password'
+          }
           this.alertService.error(error, {autoClose: true});
           this.loading = false;
         });

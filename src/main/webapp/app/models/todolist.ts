@@ -3,7 +3,6 @@ export class ToDoList {
   name?: string;
   userId?: string;
   expanded?: boolean;
-  editMode?: boolean;
   taskCount?: number;
   iconName?: string;
   isNew?: boolean;

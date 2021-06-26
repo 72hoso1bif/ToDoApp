@@ -1,15 +1,23 @@
-.users-list-header-container{
-  width: 80%;
-  padding: 20px;
-  margin: auto;
-}
-
 .users-list-table-container {
+  overflow: auto;
   width: 80%;
-  margin: auto;
+  margin: 50px auto auto;
 
-  table {
+  &--table {
     width: 100%;
+    &--role-container{
+      align-content: space-between;
+      :last-child{
+        margin-right: 50px;
+      }
+    }
+  }
 
+  tr.readonly {
+    background-color: #eeeeee;
+  }
+
+  button{
+    outline: none;
   }
 }

@@ -58,7 +58,7 @@ export class UserProfileComponent implements OnInit {
     private imageService: ImageService,
     private titleService: Title
   ) {
-    this.authService.getUser.subscribe(value => this.user = value);
+    this.authService.getUserSubject.subscribe(value => this.user = value);
     this.authService.userImgURL.subscribe(value => this.currentImgUrl = value);
     this.hasImgUrlSubject.subscribe(value => this.hasImgUrl = value);
 
@@ -155,11 +155,15 @@ export class UserProfileComponent implements OnInit {
           this.updateUser(value);
         });
       }
+    } else {
+      if (this.userHasImage()){
+        this.updateUser(this.user.image.id)
+      } else {
+        this.updateUser(null);
+      }
+
     }
   }
-
-
-
 
   deleteImage(){
     if(this.user.image){
@@ -169,8 +173,7 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-
-  private createUser() {
+  private createUserByAdmin() {
     this.authService.register(this.userProfileForm.value)
       .pipe(first())
       .subscribe(
