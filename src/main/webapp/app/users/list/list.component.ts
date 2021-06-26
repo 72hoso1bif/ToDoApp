@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {first, tap} from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {UserDataSource} from '../UserDataSource';
 import {UserService} from '../../services/UserService';
 import {AlertService} from "../../services/alert.service";
 import {Title} from "@angular/platform-browser";
+import {OpenModalService} from "../../services/openModalService";
 
 @Component({
   selector: 'app-list',
@@ -20,16 +21,21 @@ export class ListComponent implements OnInit, AfterViewInit {
   hasErrors = false;
   index: number;
 
-  @ViewChild('email', { static: false }) emailElement: ElementRef;
-  @ViewChild('roles', { static: false }) rolesElement: ElementRef;
+  @ViewChildren('email') email: QueryList<ElementRef>;
+  @ViewChildren('roles') roles: QueryList<ElementRef>;
+  roleElements: any;
+  emailElements: any;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
-  constructor(private userService: UserService, private alertService: AlertService, private titleService: Title) {}
+  constructor(private userService: UserService, private alertService: AlertService, private titleService: Title, private openModalService: OpenModalService) {
+
+  }
 
   ngOnInit() {
     this.titleService.setTitle('Users');
     this.dataSource = new UserDataSource(this.userService);
     this.dataSource.loadUsers();
+
   }
 
   ngAfterViewInit() {
@@ -38,6 +44,16 @@ export class ListComponent implements OnInit, AfterViewInit {
         tap(() => this.dataSource.loadUsers())
       )
       .subscribe();
+    this.roles.changes.subscribe(()=>{
+      this.roleElements = this.roles.map(role => {
+        return role.nativeElement;
+      });
+    });
+    this.email.changes.subscribe(()=>{
+      this.emailElements = this.email.map(email => {
+        return email.nativeElement;
+      });
+    });
   }
 
   deleteUser(id: string) {
@@ -53,41 +69,46 @@ export class ListComponent implements OnInit, AfterViewInit {
     this.isDeleting = false;
   }
 
-  startEdit(row) {
+  startEdit(row, index) {
     row.editMode = true;
   }
 
-  confirmEditCreate(row) {
+  confirmEditCreate(row, index) {
     row.editMode = false;
 
+    let currentRoleValue: string = this.roleElements[index].children[0].children[0].value;
+    let currentEmailValue: string = this.emailElements[index].children[0].value;
 
     let rolesElement: any[] = this.dataSource.getValue().filter(user => user.id === row.id)[0].roles;
     let rolesStringElements = this.convertRoleToStrings(rolesElement);
 
-    if(!rolesStringElements.includes(this.rolesElement.nativeElement.value)){
-      if(this.rolesElement.nativeElement.value.includes(',')){
-        if(this.rolesElement.nativeElement.value.split(',')[1] === 'ROLE_USER' || this.rolesElement.nativeElement.value.split(',')[1] === 'ROLE_MOD' || this.rolesElement.nativeElement.value.split(',')[1] === 'ROLE_ADMIN'){
-          rolesStringElements.push(this.rolesElement.nativeElement.value.split(',')[1]);
+    if(!rolesStringElements.includes(currentRoleValue)){
+      if(currentRoleValue.includes(',')){
+        if(currentRoleValue.split(',')[1] === 'ROLE_USER' || currentRoleValue.split(',')[1] === 'ROLE_MOD' || currentRoleValue.split(',')[1] === 'ROLE_ADMIN'){
+          rolesStringElements.push(currentRoleValue.split(',')[1]);
           this.hasErrors = false;
         } else {
           this.hasErrors = true;
-          this.alertService.error('There is no such Role ' + '\|' + this.rolesElement.nativeElement.value.split(',')[1] + '\|' + '\n available roles are ROLE_MOD, ROLE_ADMIN, ROLE_USER');
+          this.index = index;
+          this.alertService.error('There is no such Role ' + '\|' + currentRoleValue.split(',')[1] + '\|' + '\n available roles are ROLE_MOD, ROLE_ADMIN, ROLE_USER');
         }
       }else {
         this.hasErrors = true;
+        this.index = index;
         this.alertService.error('No comma was found. New entry should look like \'ROLE_USER,ROLE_MOD\'', { keepAfterRouteChange: true , autoClose: true});
       }
     } else {
+
       this.hasErrors = false;
     }
 
     let user = this.dataSource.getValue().filter(user => user.id === row.id)[0];
-    if(user.email === this.emailElement.nativeElement.value && this.compareRoles(rolesStringElements, rolesElement) && !this.hasErrors) {
+    if(user.email === currentEmailValue && this.compareRoles(rolesStringElements, rolesElement) && !this.hasErrors) {
       this.alertService.info('Nothing was changed', { keepAfterRouteChange: true , autoClose: true});
     } else  {
       if(!this.hasErrors){
         let newUser = {
-          email: this.emailElement.nativeElement.value,
+          email: currentEmailValue,
           username: row.username,
           roles: rolesStringElements
         }
@@ -141,11 +162,16 @@ export class ListComponent implements OnInit, AfterViewInit {
     roleElements = roleElements.filter(role => role.name !== name);
     let roleStringElements = this.convertRoleToStrings(roleElements);
     let newUser = {
-      email: this.emailElement.nativeElement.value,
+      email: row.email,
       username: row.username,
       roles: roleStringElements
     }
     this.updateUser(row.id, newUser);
+  }
+
+  openRegisterDialog() {
+    this.openModalService.openRegisterDialog(true);
+    this.dataSource.loadUsers();
   }
 }
 

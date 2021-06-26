@@ -85,7 +85,7 @@ export class LogInComponent implements OnInit {
 
   openRegisterDialog() {
     this.dialogRef.close();
-    this.openModalService.openRegisterDialog();
+    this.openModalService.openRegisterDialog(false);
   }
 
 }

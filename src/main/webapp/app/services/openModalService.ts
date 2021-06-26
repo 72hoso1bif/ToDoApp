@@ -15,13 +15,22 @@ export class OpenModalService {
   constructor(private dialog: MatDialog, private router: Router, private authService: AuthService) {
   }
 
-  openRegisterDialog() {
+  openRegisterDialog(byAdmin) {
     const dialogRef = this.dialog.open(RegisterComponent, {
       panelClass: 'registerPanel'
     });
 
+    dialogRef.componentInstance.byAdmin = byAdmin;
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['/home']);
+      if (byAdmin){
+        this.router.routeReuseStrategy.shouldReuseRoute = function () {
+          return false;
+        }
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/users/list'])
+      } else {
+        this.router.navigate(['/home']);
+      }
     });
   }
 

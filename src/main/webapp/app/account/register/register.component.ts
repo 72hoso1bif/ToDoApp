@@ -7,6 +7,7 @@ import {AuthService} from '../../services/AuthService';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {LogInComponent} from '../log-in/log-in.component';
 import {OpenModalService} from '../../services/openModalService';
+import {UserDataSource} from "../../users/UserDataSource";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,6 +17,10 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   loading = false;
   submitted = false;
+  byAdmin: boolean;
+  dataSource: any;
+  headerText: string;
+  buttonText: string;
 
   @Output() registerSuccess = new EventEmitter();
 
@@ -24,8 +29,8 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private alertService: AlertService,
-    public dialogRef: MatDialogRef<RegisterComponent>,
-    public openModalService: OpenModalService
+    private dialogRef: MatDialogRef<RegisterComponent>,
+    private openModalService: OpenModalService,
   ) {
     this.form = this.formBuilder.group({
       email: new FormControl('', [ Validators.required,
@@ -35,9 +40,19 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.byAdmin){
+      this.headerText = 'Create User';
+      this.buttonText = 'create';
+    } else {
+      this.headerText = 'Register Page';
+      this.buttonText = 'Signup';
+    }
+
+  }
 
   // convenience getter for easy access to form fields
+
   get f() { return this.form.controls; }
 
   onSubmit(newUser) {
@@ -56,9 +71,15 @@ export class RegisterComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.alertService.success('Registration successful', { keepAfterRouteChange: true , autoClose: true });
-          this.registerSuccess.emit(true);
-          this.openLoginDialog();
+          if(this.byAdmin){
+            this.alertService.success('User added successful', { keepAfterRouteChange: true , autoClose: true });
+            this.registerSuccess.emit(true);
+            this.dialogRef.close();
+          }else {
+            this.alertService.success('Registration successful', { keepAfterRouteChange: true , autoClose: true });
+            this.registerSuccess.emit(true);
+            this.openLoginDialog();
+          }
         },
         error => {
           this.alertService.error(error, {autoClose: true});

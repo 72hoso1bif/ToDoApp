@@ -12,6 +12,9 @@ import {LogInComponent} from "../log-in/log-in.component";
 import {blankUser, blankUserRegister, validUser, validUserRegister} from "../../../mocks/mocks";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/AuthService";
+import {Subject} from "rxjs";
+import {FakeSubject} from "../log-in/log-in.component.spec";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 const authServiceSpy = jasmine.createSpyObj('AuthService', ['register']);
 const matDialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
@@ -74,8 +77,9 @@ describe('Register Component Shallow Test', () => {
     TestBed.configureTestingModule({
       imports: [MatFormFieldModule, FormsModule, MatDialogModule, ReactiveFormsModule,
         RouterTestingModule, HttpClientModule, MatInputModule, BrowserAnimationsModule],
-      providers: [{provide: MatDialogRef, useValue: dialogMock}, {provide: AuthService, useValue: authServiceSpy}, FormBuilder ],
-      declarations: [ RegisterComponent ]
+      providers: [{provide: MatDialogRef, useValue: dialogMock}, {provide: AuthService, useValue: authServiceSpy},{provide: Subject, useValue: FakeSubject},  FormBuilder ],
+      declarations: [ RegisterComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(RegisterComponent);
   }));
@@ -254,8 +258,9 @@ describe('Register Component Integrated Test', () => {
     TestBed.configureTestingModule({
       imports: [MatFormFieldModule, FormsModule, MatDialogModule, ReactiveFormsModule,
         RouterTestingModule, HttpClientModule, MatInputModule, BrowserAnimationsModule],
-      providers: [{provide: MatDialogRef, useValue: dialogMock}, {provide: AuthService, useValue: authServiceSpy}, FormBuilder ],
-      declarations: [ RegisterComponent ]
+      providers: [{provide: MatDialogRef, useValue: dialogMock}, {provide: AuthService, useValue: authServiceSpy}, {provide: Subject, useValue: FakeSubject}, FormBuilder ],
+      declarations: [ RegisterComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(RegisterComponent);
 

@@ -1,8 +1,11 @@
 <div class="dialog-content" mat-dialog-content>
+  <div class="alert-section">
+    <alert></alert>
+  </div>
   <div fxLayout="row" fxLayoutAlign="center center" class="login-main">
     <div>
       <div class="header">
-        <h2>Register Page</h2>
+        <h2>{{headerText}}</h2>
       </div>
       <div class fxLayout="column">
         <div class="alert-section"></div>
@@ -40,10 +43,10 @@
           <div class="submit">
             <button  [disabled]="loading" (click)="onSubmit(form.value)" mat-raised-button color="primary">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              Signup
+              {{buttonText}}
             </button>
           </div>
-          <div>
+          <div *ngIf="!byAdmin">
             <a (click)="openLoginDialog()">back to Login</a>
           </div>
         </mat-dialog-actions>

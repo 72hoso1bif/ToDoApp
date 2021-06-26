@@ -95,7 +95,7 @@ export class SideNavbarComponent implements OnInit, OnChanges {
   }
 
   openRegisterDialog(): void {
-    this.openModalService.openRegisterDialog();
+    this.openModalService.openRegisterDialog(false);
   }
 
   logout() {
