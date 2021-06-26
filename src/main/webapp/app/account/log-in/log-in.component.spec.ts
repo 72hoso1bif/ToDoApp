@@ -11,15 +11,28 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {AuthService} from "../../services/AuthService";
 import {blankUser, validUser} from "../../../mocks/mocks";
 import {Router} from "@angular/router";
+import {AlertModule} from "../../alert/alert.module";
+import {AlertService} from "../../services/alert.service";
+import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {AlertComponent} from "../../alert/alert.component";
+import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
+import {Subject} from "rxjs";
+import {Alert, AlertType} from "../../models";
 
 const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 const authServiceSpy = jasmine.createSpyObj('AuthService', ['login']);
 const matDialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
 const openModalServiceSpy = jasmine.createSpyObj('OpenModalService', ['openRegisterDialog']);
 const toDoSharedDataServiceSpy = jasmine.createSpyObj('ToDoSharedDataService', ['updateToDoList']);
-const alertServiceSpy = jasmine.createSpyObj('AlertService', ['clear','error']);
+const alertServiceSpy = jasmine.createSpyObj('AlertService', ['clear','error', 'onAlert', 'subscribe']);
+const alertComponentSpy = jasmine.createSpyObj('AlertComponent', ['ngOnInit']);
 
 const testUserData = { id: 1, name: 'TekLoon'};
+
+export class FakeSubject {
+  next(value: any) {}
+  asObservable() {}
+}
 
 describe('Login Component Isolated Test', () => {
   let component: LogInComponent;
@@ -62,18 +75,21 @@ describe('Login Component Isolated Test', () => {
 describe('Login Component Shallow Test', () => {
   let fixture: ComponentFixture<LogInComponent>;
   const dialogMock = {close: () => { }};
+  const alertMock = {subscribe: () => { }};
 
   function updateForm(userEmail, userPassword) {
     fixture.componentInstance.loginForm.controls['username'].setValue(userEmail);
     fixture.componentInstance.loginForm.controls['password'].setValue(userPassword);
   }
 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatFormFieldModule, FormsModule, MatDialogModule, ReactiveFormsModule,
         RouterTestingModule, HttpClientModule, MatInputModule, BrowserAnimationsModule],
-      providers: [{provide: MatDialogRef, useValue: dialogMock}, { provide: Router, useValue: routerSpy }, {provide: AuthService, useValue: authServiceSpy}, FormBuilder ],
-      declarations: [ LogInComponent ]
+      providers: [{provide: MatDialogRef, useValue: dialogMock}, { provide: Router, useValue: routerSpy }, {provide: AuthService, useValue: authServiceSpy}, {provide: Subject, useValue: FakeSubject}, FormBuilder ],
+      declarations: [ LogInComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
       fixture = TestBed.createComponent(LogInComponent);
   }));
@@ -146,25 +162,33 @@ describe('Login Component Shallow Test', () => {
 describe('Login Component Integrated Test', () => {
   let fixture: ComponentFixture<LogInComponent>;
   let loginSpy;
+  let service;
   const dialogMock = {close: () => { }};
+  const alertMock = {subscribe: () => { }};
 
   function updateForm(userEmail, userPassword) {
     fixture.componentInstance.loginForm.controls['username'].setValue(userEmail);
     fixture.componentInstance.loginForm.controls['password'].setValue(userPassword);
   }
 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatFormFieldModule, FormsModule, MatDialogModule, ReactiveFormsModule,
         RouterTestingModule, HttpClientModule, MatInputModule, BrowserAnimationsModule],
-      providers: [{provide: MatDialogRef, useValue: dialogMock}, { provide: Router, useValue: routerSpy }, {provide: AuthService, useValue: authServiceSpy}, FormBuilder ],
-      declarations: [ LogInComponent ]
+      providers: [{provide: MatDialogRef, useValue: dialogMock}, { provide: Router, useValue: routerSpy }, {provide: AuthService, useValue: authServiceSpy}, {provide: Subject, useValue: FakeSubject}, FormBuilder ],
+      declarations: [ LogInComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(LogInComponent);
 
     loginSpy = authServiceSpy.login.and.returnValue(Promise.resolve(testUserData));
 
   }));
+
+  beforeEach(() => {
+    service = TestBed.get(AlertService);
+  });
 
   it('authService login() should called ', fakeAsync(() => {
     updateForm(validUser.username, validUser.password);
@@ -174,9 +198,10 @@ describe('Login Component Integrated Test', () => {
     fixture.detectChanges();
 
     expect(authServiceSpy.login).toHaveBeenCalled();
+
   }));
 
-  it('should route to home if login successfully', fakeAsync(() => {
+  it('should call login and return authService', fakeAsync(() => {
     updateForm(validUser.username, validUser.password);
     fixture.detectChanges();
     const button = fixture.debugElement.nativeElement.querySelector('button');
@@ -185,6 +210,8 @@ describe('Login Component Integrated Test', () => {
 
     loginSpy = authServiceSpy.login.and.returnValue(Promise.resolve(testUserData));
     advance(fixture);
+
+    expect(loginSpy).toBeDefined();
 
   }));
   function advance(f: ComponentFixture<any>) {

@@ -61,7 +61,7 @@ export class ListComponent implements OnInit, AfterViewInit {
   confirmEditCreate(row) {
     row.editMode = false;
 
-    
+
     let rolesElement: any[] = this.dataSource.getValue().filter(user => user.id === row.id)[0].roles;
     let rolesStringElements = this.convertRoleToStrings(rolesElement);
 
