@@ -54,7 +54,6 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   startEdit(row) {
-    console.log(this.index);
     row.editMode = true;
   }
 
@@ -69,7 +68,6 @@ export class ListComponent implements OnInit, AfterViewInit {
       if(this.rolesElement.nativeElement.value.includes(',')){
         if(this.rolesElement.nativeElement.value.split(',')[1] === 'ROLE_USER' || this.rolesElement.nativeElement.value.split(',')[1] === 'ROLE_MOD' || this.rolesElement.nativeElement.value.split(',')[1] === 'ROLE_ADMIN'){
           rolesStringElements.push(this.rolesElement.nativeElement.value.split(',')[1]);
-          console.log(rolesStringElements);
           this.hasErrors = false;
         } else {
           this.hasErrors = true;
@@ -84,7 +82,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     let user = this.dataSource.getValue().filter(user => user.id === row.id)[0];
-    console.log(this.hasErrors);
     if(user.email === this.emailElement.nativeElement.value && this.compareRoles(rolesStringElements, rolesElement) && !this.hasErrors) {
       this.alertService.info('Nothing was changed', { keepAfterRouteChange: true , autoClose: true});
     } else  {
@@ -121,14 +118,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
   compareRoles(rolesStringElements: string[], rolesElement): boolean{
     let equal = false;
-    console.log(rolesStringElements);
-    console.log(rolesElement);
     rolesStringElements.forEach(role => {
       rolesElement.forEach(roleInUser =>{
         equal = roleInUser.name === role;
       });
     });
-    console.log(equal);
     return equal;
   }
 
@@ -151,7 +145,6 @@ export class ListComponent implements OnInit, AfterViewInit {
       username: row.username,
       roles: roleStringElements
     }
-    console.log(roleStringElements);
     this.updateUser(row.id, newUser);
   }
 }
