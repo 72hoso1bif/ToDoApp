@@ -28,8 +28,8 @@
         <div *ngIf="element" #roles>
           <ng-container  *ngFor="let role of element?.roles; let j = index">
             <div fxLayout="row" class="users-list-table-container--table--role-container">
-              <input [style.text-decoration]="hasErrors && i == index?'underline':'none'" [style.text-decoration-color]="hasErrors && i == index?'red':'none'"  matTooltip="{{hasErrors && i == index?'Should look like \'ROLE_ADMIN,ROLE_USER':null}}" [value]="role.name" type="text" matInput  [readonly]="!element.editMode" >
-              <button mat-icon-button [hidden]="!element.editMode && i != index" (click)='deleteRoleAndUpdateUser(role.name, element)'><mat-icon color="warn">close</mat-icon></button>
+              <input [style.text-decoration]="hasErrors && i == index?'underline':'none'" [style.text-decoration-color]="hasErrors && i == index?'red':'none'"  matTooltip="{{hasErrors && i == index?'Should look like \'ROLE_ADMIN,ROLE_USER':null}}" [value]="role.name" type="text" matInput  [readonly]="!element.editMode">
+              <button mat-icon-button [hidden]="!element.editMode" (click)='deleteRoleAndUpdateUser(role.name, element)'><mat-icon color="warn">close</mat-icon></button>
             </div>
           </ng-container>
         </div>
