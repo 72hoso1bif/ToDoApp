@@ -8,7 +8,7 @@ on:
 
 jobs:
   backend: 
-    name: Backend - Units & Integrations
+    name: Backend Test and Deploy
     runs-on: ubuntu-18.04
     
     services:
@@ -57,7 +57,7 @@ jobs:
         env:
           HD_APP_BASE: "src/api"
   frontend: 
-    name: Frontend Build and Test 
+    name: Frontend Build, Test and Deploy 
     runs-on: ubuntu-latest 
     steps: 
     - name: Checkout 
