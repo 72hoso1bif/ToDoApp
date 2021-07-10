@@ -31,4 +31,11 @@ public class ToDoListTaskDTO {
         this.endAt = endAt;
         this.toDoListId = toDoListId;
     }
+
+  public ToDoListTaskDTO(String taskName, boolean important, Long endAt, Long toDoListId) {
+    this.taskName = taskName;
+    this.important = important;
+    this.endAt = endAt;
+    this.toDoListId = toDoListId;
+  }
 }

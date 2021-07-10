@@ -1,33 +1,26 @@
 package ba.todolist.ControllerTest;
 
-import ba.todolist.AbstractTest;
+import ba.todolist.AbstractTests;
 import ba.todolist.Models.ERole;
 import ba.todolist.Models.Role;
 import ba.todolist.Models.User;
 import ba.todolist.Payload.request.LoginRequest;
 import ba.todolist.Payload.request.SignupRequest;
 import ba.todolist.Payload.response.MessageResponse;
-import ba.todolist.Repository.RoleRepository;
-import ba.todolist.Repository.ToDoRepository;
 import ba.todolist.Repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,8 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@SpringBootTest
-public class UserAuthControllerMockTests extends AbstractTest {
+public class UserAuthControllerMockTests extends AbstractTests {
 
     @Autowired
     private UserRepository userRepository;
@@ -63,7 +55,7 @@ public class UserAuthControllerMockTests extends AbstractTest {
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
     public void getUsers() throws Exception {
-        String uri = "/api/users/all/1";
+        String uri = "/api/users/all";
         ResultActions result = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))

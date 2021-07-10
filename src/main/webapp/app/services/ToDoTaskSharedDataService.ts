@@ -16,10 +16,12 @@ export class ToDoTaskSharedDataService {
   toDoListTaskData: Observable<ToDoListTask[]>;
   toDoListTaskInProgressData: Observable<ToDoListTask[]>;
   toDoListTaskDoneData: Observable<ToDoListTask[]>;
+  toDoListTaskDeleteData: Observable<ToDoListTask[]>;
 
   toDoListTaskSubject: BehaviorSubject<ToDoListTask[]> = new BehaviorSubject<ToDoListTask[]>(null);
   toDoListTaskInProgressSubject: BehaviorSubject<ToDoListTask[]> = new BehaviorSubject<ToDoListTask[]>(null);
   toDoListTaskDoneSubject: BehaviorSubject<ToDoListTask[]> = new BehaviorSubject<ToDoListTask[]>(null);
+  toDoListTaskDeleteSubject: BehaviorSubject<ToDoListTask[]> = new BehaviorSubject<ToDoListTask[]>(null);
 
 
   toDoListId: number;
@@ -37,6 +39,7 @@ export class ToDoTaskSharedDataService {
     this.toDoListTaskData = this.toDoListTaskSubject.asObservable();
     this.toDoListTaskInProgressData = this.toDoListTaskInProgressSubject.asObservable();
     this.toDoListTaskDoneData = this.toDoListTaskDoneSubject.asObservable();
+    this.toDoListTaskDeleteData = this.toDoListTaskDeleteSubject.asObservable();
   }
 
   updateTasks(listType, id): void {
@@ -66,6 +69,7 @@ export class ToDoTaskSharedDataService {
     this.toDoListTaskSubject.next(null);
     this.toDoListTaskInProgressSubject.next(null);
     this.toDoListTaskDoneSubject.next(null);
+    this.toDoListTaskDeleteSubject.next(null);
   }
 
   getToDoListTaskById() {
@@ -109,6 +113,7 @@ export class ToDoTaskSharedDataService {
     const todosTODO: ToDoListTask[] = [];
     const todosINPROGRESS: ToDoListTask[] = [];
     const todosDONE: ToDoListTask[] = [];
+    const todosDELETE: ToDoListTask[] = [];
 
     for (const todo of todos) {
       if (todo.status === 'TASK_STATUS_DONE') {
@@ -117,12 +122,15 @@ export class ToDoTaskSharedDataService {
         todosTODO.push(todo);
       } else if (todo.status === 'TASK_STATUS_IN_PROGRESS') {
         todosINPROGRESS.push(todo);
+      } else if (todo.status === 'TASK_STATUS_DELETE') {
+        todosDELETE.push(todo);
       }
     }
 
     this.toDoListTaskSubject.next(todosTODO);
     this.toDoListTaskInProgressSubject.next(todosINPROGRESS);
     this.toDoListTaskDoneSubject.next(todosDONE);
+    this.toDoListTaskDeleteSubject.next(todosDELETE);
   }
 
   getCase() {
@@ -143,6 +151,10 @@ export class ToDoTaskSharedDataService {
   }
   get toDoTaskInProgressSubject(): BehaviorSubject<ToDoListTask[]> {
     return this.toDoListTaskInProgressSubject;
+  }
+
+  get toDoTaskDeleteSubject(): BehaviorSubject<ToDoListTask[]> {
+    return this.toDoListTaskDeleteSubject;
   }
 
   setToDoTaskSubject(toDoTaskSubject: BehaviorSubject<ToDoListTask[]>) {

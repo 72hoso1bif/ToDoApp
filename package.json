@@ -9,6 +9,7 @@
     "test-ci": "ng test --sourceMap=false --browsers=ChromeHeadless --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "ci:java:test": "./mvnw verify",
     "webapp:build": "npm run clean-www && npm run webapp:build:dev",
     "webapp:build:dev": "ng build",
     "ci:frontend:build": "npm run webapp:build:dev",

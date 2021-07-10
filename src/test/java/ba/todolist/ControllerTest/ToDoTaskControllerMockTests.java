@@ -1,15 +1,16 @@
 package ba.todolist.ControllerTest;
 
-import ba.todolist.AbstractTest;
+import ba.todolist.AbstractTests;
 import ba.todolist.Models.*;
 import ba.todolist.Repository.ToDoListTaskRepository;
 import ba.todolist.Repository.ToDoRepository;
+import ba.todolist.Repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -18,6 +19,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.Matchers.is;
@@ -25,11 +28,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@SpringBootTest
-public class ToDoTaskControllerMockTests extends AbstractTest {
+public class ToDoTaskControllerMockTests extends AbstractTests {
 
     @Autowired
     private ToDoListTaskRepository toDoTaskRepository;
+
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  PasswordEncoder encoder;
 
     @Autowired
     private ToDoRepository toDoRepository;
@@ -66,7 +74,7 @@ public class ToDoTaskControllerMockTests extends AbstractTest {
     @Transactional
     public void createToDoListTask() throws Exception {
         String uri = "/api/todotask/create";
-        ToDoListTaskDTO newToDoListTask = new ToDoListTaskDTO("test kaufen test", TaskStatus.TASK_STATUS_TODO, false, Instant.now().getEpochSecond(), toDoRepository.findByName("Sport").get().getId());
+        ToDoListTaskDTO newToDoListTask = new ToDoListTaskDTO("test kaufen test", false, Instant.now().toEpochMilli(), toDoRepository.findByName("Sport").get().getId());
 
         String inputJson = super.mapToJson(newToDoListTask);
         mvc.perform(post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
@@ -107,19 +115,17 @@ public class ToDoTaskControllerMockTests extends AbstractTest {
     }
 
     @WithMockUser(username = "test")
-    public void createMockToDoListTask(){
-        ToDoListTask toDoListTask = new ToDoListTask("test kaufen", TaskStatus.TASK_STATUS_TODO, false, Instant.now(), Instant.now());
-        toDoTaskRepository.save(toDoListTask);
-        ToDoList toDoList = new ToDoList("Sport", "soccer");
-        toDoList.setCreatedAt(Instant.now());
-        toDoRepository.save(toDoList);
+    public void createMockToDoListTask() {
+      ToDoList toDoList = new ToDoList("Sport", "soccer");
+      toDoList.setCreatedAt(Instant.now());
+      toDoRepository.save(toDoList);
+      ToDoListTask toDoListTask = new ToDoListTask("test kaufen", TaskStatus.TASK_STATUS_TODO, false, Instant.now(), Instant.now());
+      toDoTaskRepository.save(toDoListTask);
     }
+
 
     @WithMockUser(username = "test")
     public void deleteMockToDoListTask() {
-        if (toDoRepository.findByName("Sport").isPresent()) {
-            toDoRepository.deleteById(toDoRepository.findByName("Sport").get().getId());
-        }
         if (toDoTaskRepository.findByTaskName("test kaufen").isPresent()){
             toDoTaskRepository.deleteById(toDoTaskRepository.findByTaskName("test kaufen").get().getId());
         }else if (toDoTaskRepository.findByTaskName("test kaufen test").isPresent()){
@@ -127,6 +133,9 @@ public class ToDoTaskControllerMockTests extends AbstractTest {
         }else if (toDoTaskRepository.findByTaskName("test kaufen update").isPresent()){
             toDoTaskRepository.deleteById(toDoTaskRepository.findByTaskName("test kaufen update").get().getId());
         }
+      if (toDoRepository.findByName("Sport").isPresent()) {
+        toDoRepository.deleteById(toDoRepository.findByName("Sport").get().getId());
+      }
     }
 
 }

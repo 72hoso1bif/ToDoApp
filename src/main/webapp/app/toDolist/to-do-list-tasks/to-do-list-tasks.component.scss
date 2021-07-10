@@ -6,6 +6,7 @@
 
     &--toDoList-values{
       margin-bottom: 12px;
+      width: auto;
 
       &--icon{
         margin-right: 12px;
@@ -43,7 +44,6 @@
 
   &--board {
     display: flex;
-
     &>:last-child {
       border-right:  1px solid lightgray;
     }

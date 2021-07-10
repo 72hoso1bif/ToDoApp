@@ -1,6 +1,6 @@
 package ba.todolist.ControllerTest;
 
-import ba.todolist.AbstractTest;
+import ba.todolist.AbstractTests;
 import ba.todolist.Models.ToDoList;
 import ba.todolist.Models.ToDoListDTO;
 import ba.todolist.Repository.ToDoRepository;
@@ -8,7 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
@@ -25,8 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@SpringBootTest
-public class ToDoControllerMockTests extends AbstractTest {
+public class ToDoControllerMockTests extends AbstractTests {
 
     @Autowired
     private ToDoRepository toDoRepository;

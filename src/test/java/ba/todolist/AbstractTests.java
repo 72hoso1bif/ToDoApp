@@ -20,7 +20,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = ToDoListApplication.class)
 @WebAppConfiguration
-public abstract class AbstractTest {
+public abstract class AbstractTests {
     protected MockMvc mvc;
     @Autowired
     WebApplicationContext webApplicationContext;

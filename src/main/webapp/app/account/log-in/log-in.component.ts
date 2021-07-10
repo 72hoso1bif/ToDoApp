@@ -1,15 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../../services/AuthService';
 import {first} from 'rxjs/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../../services/alert.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {MatDialogRef} from '@angular/material/dialog';
 import {OpenModalService} from '../../services/openModalService';
-import {RegisterComponent} from '../register/register.component';
 import {ToDoSharedDataService} from "../../services/toDoSharedDataService";
-import {ToDoListService} from "../../services/ToDoListService";
 
 @Component({
   selector: 'app-log-in',
@@ -21,6 +18,7 @@ export class LogInComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+
 
   constructor(
     private formBuilder: FormBuilder,

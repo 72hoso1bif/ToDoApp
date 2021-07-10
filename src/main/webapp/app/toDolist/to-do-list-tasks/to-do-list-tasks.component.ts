@@ -29,13 +29,12 @@ export class ToDoListTasksComponent implements OnInit {
   todoListTaskSubject: BehaviorSubject<ToDoListTask[]>;
   todoListTaskInProgressSubject: BehaviorSubject<ToDoListTask[]>;
   todoListTaskDoneSubject: BehaviorSubject<ToDoListTask[]>;
+  todoListTaskDeleteSubject: BehaviorSubject<ToDoListTask[]>;
   todoListTask: ToDoListTask[] = [];
   todoListTaskInProgress: ToDoListTask[] = [];
   todoListTaskDone: ToDoListTask[] = [];
   todoListTaskToDelete: ToDoListTask[] = [];
-  todoListTaskCopy: ToDoListTask[] = [];
-  todoListTaskInProgressCopy: ToDoListTask[] = [];
-  todoListTaskDoneCopy: ToDoListTask[] = [];
+
 
   toDoListId: number;
 
@@ -64,9 +63,11 @@ export class ToDoListTasksComponent implements OnInit {
     this.todoListTaskSubject = this.toDoTaskSharedDataService.toDoTaskSubject;
     this.todoListTaskInProgressSubject = this.toDoTaskSharedDataService.toDoTaskInProgressSubject;
     this.todoListTaskDoneSubject = this.toDoTaskSharedDataService.toDoTaskDoneSubject;
+    this.todoListTaskDeleteSubject = this.toDoTaskSharedDataService.toDoTaskDeleteSubject;
     this.toDoTaskSharedDataService.toDoTaskSubject.subscribe(value => this.todoListTask = value);
     this.toDoTaskSharedDataService.toDoTaskInProgressSubject.subscribe(value => this.todoListTaskInProgress = value);
     this.toDoTaskSharedDataService.toDoTaskDoneSubject.subscribe(value => this.todoListTaskDone = value);
+    this.toDoTaskSharedDataService.toDoTaskDeleteSubject.subscribe(value => this.todoListTaskToDelete = value);
   }
 
   ngOnInit() {
@@ -199,7 +200,10 @@ export class ToDoListTasksComponent implements OnInit {
         });
 
       } else if (event.container.element.nativeElement.id === 'list_todo_delete') {
-
+        event.container.data.forEach(task => {
+          task.status = 'TASK_STATUS_DELETE';
+          this.updateToDoListTask(task);
+        });
       }
     }
   }
@@ -211,6 +215,8 @@ export class ToDoListTasksComponent implements OnInit {
     this.todoListTaskInProgress = this.toDoTaskSharedDataService.toDoTaskInProgressSubject.value
       .filter((task) => task.taskName.toLowerCase().includes(value));
     this.todoListTaskDone = this.toDoTaskSharedDataService.toDoTaskDoneSubject.value
+      .filter((task) => task.taskName.toLowerCase().includes(value));
+    this.todoListTaskToDelete = this.toDoTaskSharedDataService.toDoTaskDeleteSubject.value
       .filter((task) => task.taskName.toLowerCase().includes(value));
   }
 

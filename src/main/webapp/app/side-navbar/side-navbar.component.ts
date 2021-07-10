@@ -45,8 +45,7 @@ export class SideNavbarComponent implements OnInit, OnChanges {
     private authService: AuthService,
     public toDoSharedDataService: ToDoSharedDataService,
     private toDoTaskService: ToDoTaskService,
-    private openModalService: OpenModalService,
-    private elRef: ElementRef
+    private openModalService: OpenModalService
   ) {
     this.toDoListsSubject = this.toDoSharedDataService.toDoListSubject;
     this.toDoSharedDataService.toDoListSubject.subscribe(value => this.toDoLists = value);
