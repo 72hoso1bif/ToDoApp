@@ -41,13 +41,12 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: | 
             ${{ runner.os }}-maven-
-      - name: Maven Verify
-        run: mvn -B clean verify
+      - name: Maven Test
+        run: mvn -B clean test
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
           SPRING_DATASOURCE_USERNAME: compose_postgres
           SPRING_DATASOURCE_PASSWORD: compose_postgres
-          SPRING_JPA_HIBERNATE_DDL-AUTO: create-drop
       - name: Build, Push Backend to Heroku
         id: heroku 
         uses: akhileshns/heroku-deploy@v3.12.12 
