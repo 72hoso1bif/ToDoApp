@@ -13,7 +13,7 @@
     "webapp:build:dev": "ng build",
     "ci:backend:prepare": "./mvnw spring-boot:start",
     "ci:backend:teardown": "./mvnw spring-boot:stop",
-    "ci:backend:test": "mvn test",
+    "ci:backend:test": "./mvnw verify",
     "ci:frontend:build": "npm run webapp:build:dev",
     "ci:frontend:test": "npm run ci:frontend:build && npm run test-ci"
   },
