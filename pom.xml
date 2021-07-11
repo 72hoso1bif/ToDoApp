@@ -13,9 +13,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>todolist</name>
 	<description>BA Project</description>
-	<!-- properties>
-		<java.version>11</java.version>
-	</properties-->
+	<properties>
+    <start-class>ba.todolist.ToDoListApplication</start-class>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -133,7 +133,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>ba.todolist.ToDoListApplication</mainClass>
+          <mainClass>${start-class}</mainClass>
         </configuration>
 			</plugin>
       <plugin>
