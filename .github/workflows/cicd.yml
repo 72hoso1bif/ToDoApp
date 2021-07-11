@@ -41,8 +41,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Maven Install
-        run: mvn install
       - name: Change Permission
         run: chmod +x mvnw
       - name: Run Maven Tests
