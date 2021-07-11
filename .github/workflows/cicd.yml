@@ -41,8 +41,8 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: | 
             ${{ runner.os }}-maven-
-      - name: Maven verify
-        run: ./mvnw spring-boot:start && mvn -B clean verify && ./mvnw spring-boot:stop
+      - name: Run Maven Tests
+        run: npm run ci:backend:test
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
           SPRING_DATASOURCE_USERNAME: compose_postgres
