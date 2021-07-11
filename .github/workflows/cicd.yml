@@ -41,6 +41,8 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: | 
             ${{ runner.os }}-maven-
+      - name: Change Permission
+        run: chmod +x mvnw  
       - name: Run Maven Tests
         run: npm run ci:backend:test
         env:
