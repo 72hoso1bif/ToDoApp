@@ -132,9 +132,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <mainClass>${start-class}</mainClass>
-        </configuration>
+        <version>2.4.4</version>
 			</plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
