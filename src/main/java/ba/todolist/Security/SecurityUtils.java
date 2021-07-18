@@ -24,12 +24,11 @@ public class SecurityUtils {
 
         if(authentication.getPrincipal() instanceof UserDetails) {
             UserDetails user = (UserDetails) authentication.getPrincipal();
-            String userName = user.getUsername();
-            return userName;
+          return user.getUsername();
         } else if (authentication.getPrincipal() instanceof String) {
             return (String)authentication.getPrincipal();
         }
 
         return null;
-}
+    }
 }

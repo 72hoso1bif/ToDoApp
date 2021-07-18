@@ -6,16 +6,16 @@
     "start-dev": "ng serve --proxy-config proxy.conf.json",
     "start": "node server.js",
     "build": "ng build --prod",
-    "test-ci": "ng test --sourceMap=false --browsers=ChromeHeadless --watch=false",
+    "test:ci": "ng test --sourceMap=false --browsers=ChromeHeadless --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "webapp:build": "npm run clean-www && npm run webapp:build:dev",
     "webapp:build:dev": "ng build",
     "ci:backend:prepare": "./mvnw -B compile && ./mvnw spring-boot:start",
-    "ci:backend:teardown": "./mvnw spring-boot:stop",
-    "ci:backend:test": "npm run ci:backend:prepare && ./mvnw test && npm run ci:backend:teardown",
+    "ci:backend:teardown": "./mvnw spring-boot:stop && ./mvnw -B compile -P prod",
+    "ci:backend:test": "npm run ci:backend:prepare && ./mvnw verify && npm run ci:backend:teardown",
     "ci:frontend:build": "npm run webapp:build:dev",
-    "ci:frontend:test": "npm run ci:frontend:build && npm run test-ci"
+    "ci:frontend:test": "npm run ci:frontend:build && npm run test:ci"
   },
   "private": true,
   "dependencies": {

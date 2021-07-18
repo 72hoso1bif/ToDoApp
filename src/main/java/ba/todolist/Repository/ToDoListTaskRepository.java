@@ -34,8 +34,8 @@ public interface ToDoListTaskRepository extends JpaRepository<ToDoListTask,Long>
     /**
      * All Daily and Weekly
      * @param id ToDoListId
-     * @param start Time when the today or week began
-     * @param end Time when the today or week ends
+     * @param start Time when today or the week began
+     * @param end Time when today or the week ends
      * @return get All daily and weekly ToDoListTasks by ToDoListId and UserId and get count of Tasks
      */
     List<ToDoListTask> findByEndAtIsBetweenAndToDoList_User_Id(Instant start, Instant end, Long id);
