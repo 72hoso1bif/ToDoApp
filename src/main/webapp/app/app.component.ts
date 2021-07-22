@@ -8,15 +8,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-
   width: number;
 
   constructor() {
   }
 
-
   ngOnInit() {
-
   }
 
   setWidth(newWidth: number) {

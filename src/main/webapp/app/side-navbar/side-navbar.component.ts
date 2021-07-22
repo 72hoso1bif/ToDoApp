@@ -28,7 +28,6 @@ import {ToDoTaskService} from "../services/ToDoTaskService";
 })
 export class SideNavbarComponent implements OnInit, OnChanges {
 
-
   user: User;
 
   @Output()

@@ -50,7 +50,7 @@
         <span class="nav-link-entry-content--icon material-icons-outlined"><mat-icon>{{todos.iconName}}</mat-icon></span>
         <a *ngIf="!isMobile" class="nav-link-entry-content--link" routerLinkActive="active">{{todos.name}}</a>
         <mat-chip-list *ngIf="!isMobile" class="nav-link-entry-content--chip-list">
-          <mat-chip *ngIf="todos.isNew" color="primary" selected [removable]="true" (removed)="removeChip(todos)"matChipRemove>
+          <mat-chip *ngIf="todos.isNew" color="primary" selected [removable]="true" (removed)="removeChip(todos)" matChipRemove>
             new
           </mat-chip>
         </mat-chip-list>

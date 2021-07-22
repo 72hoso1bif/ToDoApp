@@ -112,7 +112,7 @@ public class ToDoListTaskController {
 
 
     @GetMapping("/missed/{userId}")
-    public List<ToDoListTask> findAllByMissedTasks(@PathVariable Long userId) {
+    public List<ToDoListTask> findAllMissedTasks(@PathVariable Long userId) {
         String[] currentTimeSplit = Instant.now().toString().split("T");
         String dayStart = currentTimeSplit[0] + "T00:00:00Z";
         Instant dayStartInstant = Instant.parse(dayStart);
@@ -138,7 +138,7 @@ public class ToDoListTaskController {
         newToDoListTask.setEndAt(date);
         newToDoListTask.setToDoList(this.toDoRepository.findById(toDoListTaskDTO.getToDoListId()).get());
 
-        return this.toDoListTaskRepository.save(newToDoListTask);
+        return toDoListTaskRepository.save(newToDoListTask);
     }
 
     @PutMapping("/save")
@@ -153,8 +153,8 @@ public class ToDoListTaskController {
         ToDoListTask currentTask = this.toDoListTaskRepository.findById(toDoListTaskDTO.getId()).get();
         uToDoListTask.setCreatedAt(currentTask.getCreatedAt());
         uToDoListTask.setToDoList(currentTask.getToDoList());
-        return this.toDoListTaskRepository.save(uToDoListTask);
-    }   
+        return toDoListTaskRepository.save(uToDoListTask);
+    }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)

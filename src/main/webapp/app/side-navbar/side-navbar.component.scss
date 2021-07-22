@@ -14,7 +14,6 @@
       }
     }
 
-
     .nav-link-entry-content {
 
       @mixin icon($isAvatar: false) {
@@ -48,15 +47,12 @@
         :first-child{
           padding: 8px;
         }
-
       }
-
       &--link {
         color: #ffffff;
         font-weight: 400;
         text-decoration: none;
       }
-
       :last-child{
         color: #ffffff;
         font-weight: 400;

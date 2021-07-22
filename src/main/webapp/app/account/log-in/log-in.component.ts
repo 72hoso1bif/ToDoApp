@@ -57,12 +57,10 @@ export class LogInComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-
     user = {
       username: user.username,
       password: user.password
     }
-
     this.loading = true;
     this.authService.login(user)
       .pipe(first())
